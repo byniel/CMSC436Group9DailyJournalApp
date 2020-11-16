@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.dailyjournalgroup9.R
+import com.example.dailyjournalgroup9.ui.calendar.CalendarFragment
 
 class HomeFragment : Fragment() {
 
@@ -26,6 +27,14 @@ class HomeFragment : Fragment() {
         homeViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+        // will need to check that this is the fragment we want
+        if (null == childFragmentManager.findFragmentById(R.id.calendar_frame)){
+            val fragmentTransaction = childFragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.calendar_frame, CalendarFragment())
+            fragmentTransaction.commit()
+        }
+
         return root
     }
 }
