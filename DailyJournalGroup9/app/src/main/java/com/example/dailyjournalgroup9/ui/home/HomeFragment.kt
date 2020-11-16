@@ -29,11 +29,11 @@ class HomeFragment : Fragment() {
         })
 
         // will need to check that this is the fragment we want
-        if (null == childFragmentManager.findFragmentById(R.id.calendar_frame)){
-            val fragmentTransaction = childFragmentManager.beginTransaction()
-            fragmentTransaction.add(R.id.calendar_frame, CalendarFragment())
-            fragmentTransaction.commit()
-        }
+//        if (null == childFragmentManager.findFragmentById(R.id.calendar_frame)){
+//            val fragmentTransaction = childFragmentManager.beginTransaction()
+//            fragmentTransaction.add(R.id.calendar_frame, CalendarFragment())
+//            fragmentTransaction.commit()
+//        }
 
         return root
     }
