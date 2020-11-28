@@ -13,10 +13,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.commit
 import com.example.dailyjournalgroup9.ui.calendar.CalendarFragment
-import com.example.dailyjournalgroup9.ui.gallery.GalleryFragment
-import com.example.dailyjournalgroup9.ui.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 

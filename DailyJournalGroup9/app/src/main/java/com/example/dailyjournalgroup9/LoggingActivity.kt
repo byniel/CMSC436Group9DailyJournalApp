@@ -38,12 +38,12 @@ class LoggingActivity : Activity() {
             emotion = "veryhappy"
         }
 
-        val logging = findViewById<EditText>(R.id.textLog)
-
-        val submitButton = findViewById<Button>(R.id.submit)
-        submitButton.setOnClickListener {
-            Toast.makeText(this, "Your log was: %s. Your emotion was %s".format(logging.getText().toString(), emotion), Toast.LENGTH_LONG).show()
-        }
+//        val logging = findViewById<EditText>(R.id.textLog)
+//
+//        val submitButton = findViewById<Button>(R.id.submit)
+//        submitButton.setOnClickListener {
+//            Toast.makeText(this, "Your log was: %s. Your emotion was %s".format(logging.getText().toString(), emotion), Toast.LENGTH_LONG).show()
+//        }
 
     }
 }
