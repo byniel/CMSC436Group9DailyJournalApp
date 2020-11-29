@@ -43,7 +43,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_star_big_on" />
 
-    <TextView
+    <EditText
         android:id="@+id/textLog"
         android:layout_width="411dp"
         android:layout_height="243dp"
@@ -91,7 +91,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/addPic"
+        android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
