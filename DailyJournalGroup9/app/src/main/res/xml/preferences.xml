@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SwitchPreference
+        android:key="switch"
+        android:title="Enable Notifications"
+        android:summary="Click to turn notifications on or off"
+        android:defaultValue="true"/>
+    <EditTextPreference
+        android:dialogTitle="Enter a time in the format '8 AM'"
+        android:key="text"
+        android:summary="Click to show an entry box"
+        android:title="Time Preference" />
+    <SwitchPreference
+        android:key="switch"
+        android:title="Notification Frequency"
+        android:summary="Click to switch between daily and weekly"
+        android:defaultValue="true"/>
+
+
+</PreferenceScreen>
