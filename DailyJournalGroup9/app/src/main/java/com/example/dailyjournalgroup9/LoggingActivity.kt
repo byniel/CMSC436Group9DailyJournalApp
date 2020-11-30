@@ -56,29 +56,51 @@ class LoggingActivity : Activity() {
 
         val submitButton = findViewById<Button>(R.id.submit)
         submitButton.setOnClickListener {
-            Toast.makeText(this, "Logged submitted", Toast.LENGTH_LONG).show()
+            //Toast.makeText(this, "Logged submitted", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, logging.text.toString(), Toast.LENGTH_LONG).show()
 
             val dirNameDate: String =
                 SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-
-            val directory = File(applicationContext.getExternalFilesDir(null), dirNameDate)
-            if (!directory?.mkdirs()) {
+            val directory = File(applicationContext.getExternalFilesDir(
+               null), dirNameDate + "/")
+            Log.e(null, directory.toString())
+            val thepath = "/storage/emulated/0/Android/data/com.example.dailyjournalgroup9/files/"
+            if (!directory?.mkdirs()!!) {
                 Log.e(null, "Directory not created")
             }
 
+            val logOutputStream: FileOutputStream
             var log = logging.text.toString()
 
-            val logOutputStream: FileOutputStream
+            val outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory, "log1.txt")))
+            outputStreamWriter.append(log)
+            outputStreamWriter.close()
+            val logfile = File(directory, "log1.txt")
 
-            logOutputStream = openFileOutput(dirNameDate + "/log", Context.MODE_PRIVATE)
-            logOutputStream.write(log.toByteArray())
-            logOutputStream.close()
+            val lt = StringBuilder()
+            try {
+                val br = BufferedReader(FileReader(logfile))
+                var line = br.readLine()
 
-            val emotionOutputStream: FileOutputStream
+                while (line != null) {
+                    lt.append(line)
+                    lt.append('\n')
+                    line = br.readLine()
+                }
+                br.close()
+            } catch (e: IOException) {
 
-            emotionOutputStream = openFileOutput(dirNameDate + "/emotion", Context.MODE_PRIVATE)
-            emotionOutputStream.write(log.toByteArray())
-            logOutputStream.close()
+            }
+            //val inputStreamWriter = InputStreamReader(FileInputStream(File(directory, "log1.txt")))
+            //val readme = inputStreamWriter.read().toString()
+            Log.e(null, lt.toString())
+            //inputStreamWriter.close()
+
+//            val emotionOutputStream: FileOutputStream
+//
+//            emotionOutputStream = openFileOutput(dirNameDate + "/emotion.txt", Context.MODE_PRIVATE)
+//            emotionOutputStream.write(log.toByteArray())
+//            logOutputStream.close()
 
             val myIntent = Intent(this@LoggingActivity, MainActivity::class.java)
             this@LoggingActivity.startActivity(myIntent)
