@@ -10,10 +10,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
-<<<<<<< HEAD
-
     <string name="name_placeholder">Enter your name</string>
-=======
     <string name="menu_calendar">Calendar</string>
->>>>>>> origin/main
+
 </resources>
