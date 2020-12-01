@@ -47,58 +47,58 @@ class HomeFragment : Fragment() {
         Log.i(null, directory.toString())
         lateinit var today : Entry
         val text = StringBuilder()
-//        if (directory.exists() && directory.isDirectory) {
-//            val logfile = File(directory, getResources().getString(R.string.text_file))
-//            try {
-//                val br = BufferedReader(FileReader(logfile))
-//                var line = br.readLine()
-//
-//                while (line != null) {
-//                    text.append(line)
-//                    text.append('\n')
-//                    line = br.readLine()
-//                }
-//                br.close()
-//            } catch (e: IOException) {
-//
-//            }
-//            val emotion = StringBuilder()
-//            val emotionFile = File(directory, getResources().getString(R.string.emotion_file))
-//            try {
-//                val br = BufferedReader(FileReader(emotionFile))
-//                var line = br.readLine()
-//
-//                while (line != null) {
-//                    emotion.append(line)
-//                    line = br.readLine()
-//                }
-//                br.close()
-//            } catch (e: IOException) {
-//
-//            }
-//
-//            today = Entry(emotion.toString(), text.toString(), Date(), null, null)
-//            log_button.text = getString(R.string.logged_button)
-//            welcome_text.text = getString(R.string.welcome_logged)
-//            log_button.setOnClickListener {
-//                val logged_activity_intent = Intent(context, LoggedActivity::class.java)
-//                if (today != null) {
-//                    logged_activity_intent.putExtra("text", today.text)
-//                    logged_activity_intent.putExtra("emotion", today.emotion)
-//                    logged_activity_intent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-//                    )
-//
-//                }
-//                startActivity(logged_activity_intent)
-//            }
-//        } else {
+        if (directory.exists() && directory.isDirectory) {
+            val logfile = File(directory, getResources().getString(R.string.text_file))
+            try {
+                val br = BufferedReader(FileReader(logfile))
+                var line = br.readLine()
+
+                while (line != null) {
+                    text.append(line)
+                    text.append('\n')
+                    line = br.readLine()
+                }
+                br.close()
+            } catch (e: IOException) {
+
+            }
+            val emotion = StringBuilder()
+            val emotionFile = File(directory, getResources().getString(R.string.emotion_file))
+            try {
+                val br = BufferedReader(FileReader(emotionFile))
+                var line = br.readLine()
+
+                while (line != null) {
+                    emotion.append(line)
+                    line = br.readLine()
+                }
+                br.close()
+            } catch (e: IOException) {
+
+            }
+
+            today = Entry(emotion.toString(), text.toString(), Date(), null, null)
+            log_button.text = getString(R.string.logged_button)
+            welcome_text.text = getString(R.string.welcome_logged)
+            log_button.setOnClickListener {
+                val logged_activity_intent = Intent(context, LoggedActivity::class.java)
+                if (today != null) {
+                    logged_activity_intent.putExtra("text", today.text)
+                    logged_activity_intent.putExtra("emotion", today.emotion)
+                    logged_activity_intent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+                    )
+
+                }
+                startActivity(logged_activity_intent)
+            }
+        } else {
             log_button.text = getString(R.string.not_logged_button)
             welcome_text.text = getString(R.string.welcome_not_logged)
             log_button.setOnClickListener {
                 val log_intent = Intent(context, LoggingActivity::class.java)
                 startActivity(log_intent)
             }
-//        }
+        }
 
         //will need to check if there is a record for the user already...if there is, change text
 

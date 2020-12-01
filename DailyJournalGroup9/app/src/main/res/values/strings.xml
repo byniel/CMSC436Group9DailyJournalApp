@@ -16,6 +16,8 @@
     <string name="welcome_not_logged">You have not logged your activity yet today!</string>
     <string name="welcome_logged">You already logged your activity today!</string>
 
+    <string name="name_placeholder">Enter your name</string>
+
     <string name="text_file">log.txt</string>
     <string name="emotion_file">emotion.txt</string>
 
