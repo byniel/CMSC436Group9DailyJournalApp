@@ -18,4 +18,24 @@ public class Entry {
         this.audio = audio;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public String getAudio() {
+        return audio;
+    }
+
+    public String getEmotion() {
+        return emotion;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public String getText() {
+        return text;
+    }
 }
+

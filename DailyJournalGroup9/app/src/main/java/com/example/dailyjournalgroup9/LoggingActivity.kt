@@ -1,13 +1,16 @@
 package com.example.dailyjournalgroup9
 
+import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.PermissionInfo
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import java.io.File
-import java.io.FileOutputStream
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -59,6 +62,17 @@ class LoggingActivity : Activity() {
             //Toast.makeText(this, "Logged submitted", Toast.LENGTH_LONG).show()
             Toast.makeText(this, logging.text.toString(), Toast.LENGTH_LONG).show()
 
+            //Need to set up a request permisson result situation
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PermissionInfo.PROTECTION_NORMAL);
+
+            } else {
+                Log.i(null, "permission already granted")
+            }
+
             val dirNameDate: String =
                 SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
             val directory = File(applicationContext.getExternalFilesDir(
@@ -72,28 +86,34 @@ class LoggingActivity : Activity() {
             val logOutputStream: FileOutputStream
             var log = logging.text.toString()
 
-            val outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory, "log1.txt")))
+            var outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory,getResources().getString(R.string.text_file))))
             outputStreamWriter.append(log)
             outputStreamWriter.close()
-            val logfile = File(directory, "log1.txt")
 
-            val lt = StringBuilder()
-            try {
-                val br = BufferedReader(FileReader(logfile))
-                var line = br.readLine()
+            outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory, getResources().getString(R.string.emotion_file))))
+            outputStreamWriter.append(emotion)
+            outputStreamWriter.close()
 
-                while (line != null) {
-                    lt.append(line)
-                    lt.append('\n')
-                    line = br.readLine()
-                }
-                br.close()
-            } catch (e: IOException) {
-
-            }
-            //val inputStreamWriter = InputStreamReader(FileInputStream(File(directory, "log1.txt")))
-            //val readme = inputStreamWriter.read().toString()
-            Log.e(null, lt.toString())
+//            val logfile = File(directory, getResources().getString(R.string.text_file))
+//
+//
+//            val lt = StringBuilder()
+//            try {
+//                val br = BufferedReader(FileReader(logfile))
+//                var line = br.readLine()
+//
+//                while (line != null) {
+//                    lt.append(line)
+//                    lt.append('\n')
+//                    line = br.readLine()
+//                }
+//                br.close()
+//            } catch (e: IOException) {
+//
+//            }
+//            //val inputStreamWriter = InputStreamReader(FileInputStream(File(directory, "log1.txt")))
+//            //val readme = inputStreamWriter.read().toString()
+//            Log.e(null, lt.toString())
             //inputStreamWriter.close()
 
 //            val emotionOutputStream: FileOutputStream

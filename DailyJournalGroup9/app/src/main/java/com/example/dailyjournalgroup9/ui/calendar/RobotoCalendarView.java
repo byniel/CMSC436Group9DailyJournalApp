@@ -474,6 +474,7 @@ public class RobotoCalendarView extends LinearLayout {
         } else {
             currMonth = new Month(dateText);
         }
+        currMonth.readDataForMonth(currentCalendar.getTime(), super.getContext());
     }
 
     private void setUpWeekDaysLayout() {
