@@ -52,6 +52,9 @@ class LoggingActivity : Activity() {
             Toast.makeText(this, "Emotion for today: very happy", Toast.LENGTH_SHORT).show()
         }
 
+        val intent = intent
+        val dateToEnter = intent.getStringExtra("date");
+
         val logging = findViewById<EditText>(R.id.textLog)
 
         val imageButton = findViewById<ImageButton>(R.id.imageButton2)
@@ -74,8 +77,7 @@ class LoggingActivity : Activity() {
                 Log.i(null, "permission already granted")
             }
 
-            val dirNameDate: String =
-                SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+            val dirNameDate: String = dateToEnter.toString()
             val directory = File(applicationContext.getExternalFilesDir(
                null), dirNameDate + "/")
             Log.e(null, directory.toString())

@@ -140,16 +140,20 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             Toast.LENGTH_SHORT
         ).show()
 
-        //check if log exists for this day
-        // change this to the log for the given day
-        val intentActivity = Intent(context, LoggedActivity::class.java)
+
         if (robotoCalendarView.currentMonth.getDay(date) != null) {
+            val intentActivity = Intent(context, LoggedActivity::class.java)
             val dayEntry : Entry =  robotoCalendarView.currentMonth.getDay(date);
             intentActivity.putExtra("text", dayEntry.text);
             intentActivity.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(dayEntry.date));
             intentActivity.putExtra("emotion", dayEntry.emotion);
+            startActivity(intentActivity)
+        } else {
+            //we probably don't want to let them log days in the future
+            val logIntent = Intent (context, LoggingActivity::class.java)
+            logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date));
+            startActivity(logIntent)
         }
-        startActivity(intentActivity)
 
         //if log doesn't exist, either do nothing or show toast
     }

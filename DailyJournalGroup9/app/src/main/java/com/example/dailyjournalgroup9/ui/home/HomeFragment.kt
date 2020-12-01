@@ -96,6 +96,7 @@ class HomeFragment : Fragment() {
             welcome_text.text = getString(R.string.welcome_not_logged)
             log_button.setOnClickListener {
                 val log_intent = Intent(context, LoggingActivity::class.java)
+                log_intent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()))
                 startActivity(log_intent)
             }
         }
