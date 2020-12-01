@@ -474,6 +474,7 @@ public class RobotoCalendarView extends LinearLayout {
         } else {
             currMonth = new Month(dateText);
         }
+        currMonth.readDataForMonth(currentCalendar.getTime(), super.getContext());
     }
 
     private void setUpWeekDaysLayout() {
@@ -629,44 +630,64 @@ public class RobotoCalendarView extends LinearLayout {
 
         // fetch a set of entries corresponding to each mood type per month
 
-        HashMap<Integer,String> entries = currMonth.getEntriesAndFilter();
-
         Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
         Calendar markMood = Calendar.getInstance();
         auxCalendar.setTime(currentCalendar.getTime());
         auxCalendar.set(Calendar.DAY_OF_MONTH, 1);
         int firstDayOfMonth = auxCalendar.get(Calendar.DAY_OF_WEEK);
         TextView dayOfTheMonthText;
+        ViewGroup dayOfTheMonthContainer;
+        ViewGroup dayOfTheMonthLayout;
+
+        HashMap<Integer,String> entries = currMonth.getEntriesAndFilter();
+
 
         // Calculate dayOfTheMonthIndex
         int dayOfTheMonthIndex = getWeekIndex(firstDayOfMonth, auxCalendar);
 
         for (int i = 1; i <= auxCalendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++, dayOfTheMonthIndex++) {
+            dayOfTheMonthContainer = rootView.findViewWithTag(DAY_OF_THE_MONTH_LAYOUT + dayOfTheMonthIndex);
             dayOfTheMonthText = rootView.findViewWithTag(DAY_OF_THE_MONTH_TEXT + dayOfTheMonthIndex);
             if (dayOfTheMonthText == null) {
                 break;
             }
-
+            dayOfTheMonthContainer.setOnClickListener(onDayOfMonthClickListener);
+            dayOfTheMonthContainer.setOnLongClickListener(onDayOfMonthLongClickListener);
+            dayOfTheMonthText.setVisibility(View.VISIBLE);
+            dayOfTheMonthText.setText(String.valueOf(i));
+//            if (entries.contains(i)) {
+//                markMood.set(Calendar.DAY_OF_MONTH, i);
+//                markCircleImage1(markMood.getTime());
+//            }
             if(entries.get(i) != null) {
+                markMood.set(Calendar.MONTH, auxCalendar.get(Calendar.MONTH));
+                markMood.set(Calendar.DAY_OF_MONTH, i);
                 if (entries.get(i).equals("content")) {
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     markContentImage(markMood.getTime());
                 } else if (entries.get(i).equals("veryhappy")){
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     markVeryHappy(markMood.getTime());
                 } else if (entries.get(i).equals("neutral")) {
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     markNeutral(markMood.getTime());
                 } else if (entries.get(i).equals("notgreat")) {
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     markNotGreat(markMood.getTime());
                 } else if (entries.get(i).equals("sad")) {
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     markSad(markMood.getTime());
                 }
             }
-
         }
+
+//
+//        Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
+//        Calendar markMood = Calendar.getInstance();
+//        auxCalendar.setTime(currentCalendar.getTime());
+//        auxCalendar.set(Calendar.DAY_OF_MONTH, 1);
+//        int firstDayOfMonth = auxCalendar.get(Calendar.DAY_OF_WEEK);
+//        TextView dayOfTheMonthText;
+//
+//        // Calculate dayOfTheMonthIndex
+//        int dayOfTheMonthIndex = getWeekIndex(firstDayOfMonth, auxCalendar);
+
+
     }
 
     public void clearMoods() {
@@ -688,32 +709,29 @@ public class RobotoCalendarView extends LinearLayout {
                 break;
             }
             if (entries.get(i) != null) {
+                markMood.set(Calendar.MONTH, auxCalendar.get(Calendar.MONTH));
+                markMood.set(Calendar.DAY_OF_MONTH, i);
                 if (entries.get(i).equals("content")) {
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     ImageView contentImage = getContentImage(markMood);
                     if (contentImage.getVisibility() == VISIBLE) {
                         contentImage.setVisibility(INVISIBLE);
                     }
                 } else if (entries.get(i).equals("veryhappy")) {
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     ImageView veryHappyImage = getVeryHappyImage(markMood);
                     if (veryHappyImage.getVisibility() == VISIBLE) {
                         veryHappyImage.setVisibility(INVISIBLE);
                     }
                 } else if (entries.get(i).equals("neutral")) {
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     ImageView neutral = getNeutralImage(markMood);
                     if (neutral.getVisibility() == VISIBLE) {
                         neutral.setVisibility(INVISIBLE);
                     }
                 } else if (entries.get(i).equals("notgreat")) {
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     ImageView notgreat = getNotGreatImage(markMood);
                     if (notgreat.getVisibility() == VISIBLE) {
                         notgreat.setVisibility(INVISIBLE);
                     }
                 } else if (entries.get(i).equals("sad")) {
-                    markMood.set(Calendar.DAY_OF_MONTH, i);
                     ImageView sad = getSadImage(markMood);
                     if (sad.getVisibility() == VISIBLE) {
                         sad.setVisibility(INVISIBLE);
