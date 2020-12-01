@@ -15,7 +15,7 @@
     <string name="logged_button">View or edit entry for today</string>
     <string name="welcome_not_logged">You have not logged your activity yet today!</string>
     <string name="welcome_logged">You already logged your activity today!</string>
-
+    <string name="name_placeholder">Enter your name</string>
 
     <string-array name="moods_array">
         <item>All Moods</item>

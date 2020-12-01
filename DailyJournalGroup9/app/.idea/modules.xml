@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1758770648/Daily Journal Group 9.iml" filepath="$PROJECT_DIR$/.idea/modules/-1758770648/Daily Journal Group 9.iml" group="Daily Journal Group 9" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app.iml" group="Daily Journal Group 9/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1261568980/library.iml" filepath="$PROJECT_DIR$/.idea/modules/1261568980/library.iml" group="Daily Journal Group 9/library" />
+    </modules>
+  </component>
+</project>
