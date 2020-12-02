@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1758770648/Daily Journal Group 9.iml" filepath="$PROJECT_DIR$/.idea/modules/-1758770648/Daily Journal Group 9.iml" group="Daily Journal Group 9" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/1664727566/DailyJournalGroup9-Daily Journal Group 9.iml" filepath="$PROJECT_DIR$/.idea/modules/1664727566/DailyJournalGroup9-Daily Journal Group 9.iml" group="Daily Journal Group 9" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DailyJournalGroup9-app.iml" filepath="$PROJECT_DIR$/.idea/modules/DailyJournalGroup9-app.iml" group="Daily Journal Group 9/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/182267322/DailyJournalGroup9-library.iml" filepath="$PROJECT_DIR$/.idea/modules/182267322/DailyJournalGroup9-library.iml" group="Daily Journal Group 9/library" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app.iml" group="Daily Journal Group 9/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/1261568980/library.iml" filepath="$PROJECT_DIR$/.idea/modules/1261568980/library.iml" group="Daily Journal Group 9/library" />
     </modules>

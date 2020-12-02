@@ -2,6 +2,7 @@ package com.example.dailyjournalgroup9.ui.calendar
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -139,8 +140,7 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             "onDayClick: $date",
             Toast.LENGTH_SHORT
         ).show()
-
-
+        
         if (robotoCalendarView.currentMonth.getDay(date) != null) {
             val intentActivity = Intent(context, LoggedActivity::class.java)
             val dayEntry : Entry =  robotoCalendarView.currentMonth.getDay(date);
@@ -154,7 +154,6 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date));
             startActivity(logIntent)
         }
-
         //if log doesn't exist, either do nothing or show toast
     }
 
@@ -180,5 +179,10 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
     override fun onLeftButtonClick() {
         Toast.makeText(context, "onLeftButtonClick!", Toast.LENGTH_SHORT)
             .show()
+    }
+
+    companion object {
+
+        private const val TAG = "Calendar Fragment"
     }
 }
