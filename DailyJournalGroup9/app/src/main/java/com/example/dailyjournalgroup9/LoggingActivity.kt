@@ -90,7 +90,7 @@ class LoggingActivity : Activity() {
             val mRecorderDialogBuilder = AlertDialog.Builder(this)
                     .setView(mRecorderDialogView)
                     .setTitle("Recording")
-            val recorderDialog = mRecorderDialogBuilder.show()
+           mRecorderDialogBuilder.show()
             // check permission
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), 111)
@@ -178,6 +178,15 @@ class LoggingActivity : Activity() {
                 })
 
 
+            }
+
+            mRecorderDialogView.pause_button.setOnClickListener {
+                try {
+                    player.release()
+                } catch (e: Exception) {
+
+                }
+                chronometer.stop()
             }
 
 
