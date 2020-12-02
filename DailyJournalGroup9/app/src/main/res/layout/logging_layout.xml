@@ -60,6 +60,8 @@
         android:layout_width="373dp"
         android:layout_height="212dp"
         android:background="@color/design_default_color_surface"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/recordingButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -2,6 +2,7 @@ package com.example.dailyjournalgroup9.ui.calendar
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,10 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.example.dailyjournalgroup9.LoggedActivity
 import com.example.dailyjournalgroup9.LoggingActivity
 import com.example.dailyjournalgroup9.R
+import java.text.SimpleDateFormat
 import java.util.*
 
 class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
@@ -139,8 +142,19 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
 
         //check if log exists for this day
         // change this to the log for the given day
-        val intentActivity = Intent(context, LoggingActivity::class.java)
+        val intentActivity = Intent(context, LoggedActivity::class.java)
+//        if (robotoCalendarView.currentMonth.getDay(date) != null) {
+//            startActivity(intentActivity)
+//        }
+
+        val dateFormatted: String =
+                SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date)
+        Log.i(TAG, dateFormatted);
+
+        intentActivity.putExtra("date", dateFormatted)
+
         startActivity(intentActivity)
+
 
         //if log doesn't exist, either do nothing or show toast
     }
@@ -167,5 +181,10 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
     override fun onLeftButtonClick() {
         Toast.makeText(context, "onLeftButtonClick!", Toast.LENGTH_SHORT)
             .show()
+    }
+
+    companion object {
+
+        private const val TAG = "Calendar Fragment"
     }
 }
