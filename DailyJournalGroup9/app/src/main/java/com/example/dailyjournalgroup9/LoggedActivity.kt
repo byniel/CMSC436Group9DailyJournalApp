@@ -11,25 +11,33 @@ import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-private lateinit var date: String
-private lateinit var emotion: String
-
 class LoggedActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.logged_layout)
 
-        //date = intent.getStringExtra("date")
         val intent = intent
 
-        val emotionView = findViewById<ImageView>(R.id.neutral)
         val imageView = findViewById<ImageView>(R.id.imageButton2)
         val logging = findViewById<TextView>(R.id.textLog)
 
-        val emotion = intent.getStringExtra("emotion");
-        val text = intent.getStringExtra("text");
-        val date = intent.getStringExtra("date");
+        val emotion = intent.getStringExtra("emotion")
+        val text = intent.getStringExtra("text")
+        val date = intent.getStringExtra("date")
+
+        val emotionView = findViewById<ImageView>(R.id.neutral)
+        if (emotion == "sad") {
+            emotionView.setImageResource(R.drawable.ic_sad)
+        } else if (emotion == "notgreat") {
+            emotionView.setImageResource(R.drawable.ic_notgreat)
+        } else if (emotion == "neutral") {
+            emotionView.setImageResource(R.drawable.ic_neutral)
+        } else if (emotion == "content") {
+            emotionView.setImageResource(R.drawable.ic_content)
+        } else {
+            emotionView.setImageResource(R.drawable.ic_veryhappy)
+        }
 
         logging.text = text;
 

@@ -29,27 +29,27 @@ class LoggingActivity : Activity() {
         val sadButton = findViewById<ImageButton>(R.id.sad)
         sadButton.setOnClickListener {
             emotion = "sad"
-            Toast.makeText(this, "Emotion for today: sad", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Emotion for today: Sad", Toast.LENGTH_SHORT).show()
         }
         val notgreatButton = findViewById<ImageButton>(R.id.notgreat)
         notgreatButton.setOnClickListener {
             emotion = "notgreat"
-            Toast.makeText(this, "Emotion for today: not great", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Emotion for today: Not Great", Toast.LENGTH_SHORT).show()
         }
         val neutralButton = findViewById<ImageButton>(R.id.neutral)
         neutralButton.setOnClickListener {
             emotion = "neutral"
-            Toast.makeText(this, "Emotion for today: neutral", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Emotion for today: Neutral", Toast.LENGTH_SHORT).show()
         }
         val contentButton = findViewById<ImageButton>(R.id.content)
         contentButton.setOnClickListener {
             emotion = "content"
-            Toast.makeText(this, "Emotion for today: content", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Emotion for today: Content", Toast.LENGTH_SHORT).show()
         }
         val veryhappyButton = findViewById<ImageButton>(R.id.veryhappy)
         veryhappyButton.setOnClickListener {
             emotion = "veryhappy"
-            Toast.makeText(this, "Emotion for today: very happy", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Emotion for today: Very Happy", Toast.LENGTH_SHORT).show()
         }
 
         val intent = intent
@@ -81,12 +81,11 @@ class LoggingActivity : Activity() {
             val directory = File(applicationContext.getExternalFilesDir(
                null), dirNameDate + "/")
             Log.e(null, directory.toString())
-            val thepath = "/storage/emulated/0/Android/data/com.example.dailyjournalgroup9/files/"
+            //val thepath = "/storage/emulated/0/Android/data/com.example.dailyjournalgroup9/files/"
             if (!directory?.mkdirs()!!) {
                 Log.e(null, "Directory not created")
             }
 
-            val logOutputStream: FileOutputStream
             var log = logging.text.toString()
 
             var outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory,getResources().getString(R.string.text_file))))

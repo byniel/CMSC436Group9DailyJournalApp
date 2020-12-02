@@ -47,13 +47,12 @@
         android:id="@+id/neutral"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/recordingButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton2"
-        app:srcCompat="@android:drawable/btn_star_big_on" />
+        android:src="@drawable/ic_neutral" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
