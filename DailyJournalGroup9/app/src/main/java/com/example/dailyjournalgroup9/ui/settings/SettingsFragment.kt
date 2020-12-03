@@ -1,4 +1,4 @@
-package com.example.dailyjournalgroup9.ui.slideshow
+package com.example.dailyjournalgroup9.ui.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.dailyjournalgroup9.R
 
-class SlideshowFragment : Fragment() {
+class SettingsFragment : Fragment() {
 
-    private lateinit var slideshowViewModel: SlideshowViewModel
+    private lateinit var slideshowViewModel: SettingsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -20,7 +20,7 @@ class SlideshowFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel::class.java)
+                ViewModelProviders.of(this).get(SettingsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
         val textView: TextView = root.findViewById(R.id.text_slideshow)
         slideshowViewModel.text.observe(viewLifecycleOwner, Observer {

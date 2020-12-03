@@ -1,5 +1,6 @@
 package com.example.dailyjournalgroup9.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -36,6 +37,14 @@ class HomeFragment : Fragment() {
 //        homeViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
+
+        val textView = root.findViewById<TextView>(R.id.user_name)
+
+        val sharedPreferences = activity?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
+
+        val name = sharedPreferences?.getString("USER_NAME", "No Name")
+
+        textView.text = "Welcome $name!"
 
         val log_button = root.findViewById<Button>(R.id.logging_button)
         val welcome_text = root.findViewById<TextView>(R.id.welcome_text)

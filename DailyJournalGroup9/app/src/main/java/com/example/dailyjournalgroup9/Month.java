@@ -61,48 +61,53 @@ public class Month {
     }
 
     public HashMap<Integer, String> getEntriesAndFilter() {
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
         HashMap<Integer, String> filtered = new HashMap<>();
         if (moodFilter != null && mediaFilter != null) {
             for (Entry e : entries) {
+                cal.setTime(e.date);
                 if (mediaFilter.equals("text")) {
                     if (e.emotion.equals(moodFilter) && e.text != null) {
-                        filtered.put(e.date.getDate(), e.emotion);
+                        filtered.put(cal.get(Calendar.DAY_OF_MONTH), e.emotion);
                     }
                 } else if (mediaFilter.equals("picture")) {
                     if (e.emotion.equals(moodFilter) && e.picture) {
-                        filtered.put(e.date.getDate(), e.emotion);
+                        filtered.put(cal.get(Calendar.DAY_OF_MONTH), e.emotion);
                     }
                 } else if (mediaFilter.equals("audio")) {
                     if (e.emotion.equals(moodFilter) && e.audio) {
-                        filtered.put(e.date.getDate(), e.emotion);
+                        filtered.put(cal.get(Calendar.DAY_OF_MONTH), e.emotion);
                     }
                 }
             }
         } else if (moodFilter != null) {
             for (Entry e : entries) {
+                cal.setTime(e.date);
                 if (e.emotion.equals(moodFilter)) {
-                    filtered.put(e.date.getDate(), e.emotion);
+                    filtered.put(cal.get(Calendar.DAY_OF_MONTH), e.emotion);
                 }
             }
         } else if (mediaFilter != null) {
             for (Entry e : entries) {
+                cal.setTime(e.date);
                 if (mediaFilter.equals("text")) {
                     if (e.text != null) {
-                        filtered.put(e.date.getDate(), e.emotion);
+                        filtered.put(cal.get(Calendar.DAY_OF_MONTH), e.emotion);
                     }
                 } else if (mediaFilter.equals("picture")) {
                     if (e.picture) {
-                        filtered.put(e.date.getDate(), e.emotion);
+                        filtered.put(cal.get(Calendar.DAY_OF_MONTH), e.emotion);
                     }
                 } else if (mediaFilter.equals("audio")) {
                     if (e.audio) {
-                        filtered.put(e.date.getDate(), e.emotion);
+                        filtered.put(cal.get(Calendar.DAY_OF_MONTH), e.emotion);
                     }
                 }
             }
         } else {
             for (Entry e : entries) {
-                filtered.put(e.date.getDate(), e.emotion);
+                cal.setTime(e.date);
+                filtered.put(cal.get(Calendar.DAY_OF_MONTH), e.emotion);
             }
         }
 

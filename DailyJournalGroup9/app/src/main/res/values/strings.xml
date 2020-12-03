@@ -17,6 +17,7 @@
     <string name="welcome_logged">You already logged your activity today!</string>
 
     <string name="name_placeholder">Enter your name</string>
+    <string name="bday_placeholder">Pick your birthday</string>
 
     <string name="text_file">log.txt</string>
     <string name="emotion_file">emotion.txt</string>
