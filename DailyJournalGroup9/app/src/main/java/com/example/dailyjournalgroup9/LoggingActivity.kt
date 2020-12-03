@@ -9,7 +9,6 @@ import android.content.pm.PermissionInfo
 import android.app.AlertDialog
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -27,9 +26,8 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.logging_layout.*
 import kotlinx.android.synthetic.main.picture_dialog.view.*
 import kotlinx.android.synthetic.main.recording_dialog.view.*
+import kotlinx.android.synthetic.main.submit_dialog.view.*
 import java.io.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 private lateinit var date: TextView
@@ -37,15 +35,17 @@ private lateinit var time: TextView
 private var emotion = "neutral"
 private lateinit var photoFile: File
 private lateinit var image: Bitmap
-//private var photoFileName =   SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date()) + ".jpg"
 private lateinit var recorder : MediaRecorder
 private lateinit var player : MediaPlayer
 private var lastProgress = 0
 private var fileName = ""
-private var currDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
 private val mHandler = Handler()
 private var pictureTaken = false
-private lateinit var seekBar1 : SeekBar
+private var dateToEnter = ""
+private lateinit var seekBar : SeekBar
+private var recordedVoice = false
+private var isPaused = false
+private var havePlayed = false
 class LoggingActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,14 +79,16 @@ class LoggingActivity : Activity() {
         }
 
         val intent = intent
-        val dateToEnter = intent.getStringExtra("date");
+        dateToEnter = intent.getStringExtra("date").toString();
 
         val logging = findViewById<EditText>(R.id.textLog)
         val recordingButton = findViewById<Button>(R.id.recordingButton)
         val imageButton = findViewById<ImageButton>(R.id.imageButton2)
 
 
-        // Audio Recording Logging
+        /***************************
+         * AUDIO RECORDING LOGGING *
+         ***************************/
 
         recordingButton.setOnClickListener {
 
@@ -100,86 +102,115 @@ class LoggingActivity : Activity() {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), 111)
             }
-            seekBar1 = mRecorderDialogView.seekBar
+
             mRecorderDialogView.start_button.setOnClickListener {
 
+                seekBar = mRecorderDialogView.seekBar
                 recorder = MediaRecorder()
                 recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
                 recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
 
                 val path = applicationContext.getExternalFilesDir(null) as File
-
-                fileName = path.absolutePath + "/$currDate.mp3"
-
-                Log.i(TAG, "file name: $fileName")
+                fileName = path.absolutePath + "/temprecording.mp3"
+                recordedVoice = true
+//                Log.i(TAG, "file name: $fileName")
 
                 recorder.setOutputFile(fileName)
                 recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-
+                chronometer.base = SystemClock.elapsedRealtime()
                 try {
+
                     recorder.prepare()
                     recorder.start()
+                    chronometer.start()
+                    seekBar.progress = 0
+                    mRecorderDialogView.start_button.visibility = View.GONE
+                    mRecorderDialogView.stop_button.visibility = View.VISIBLE
                 } catch (e: IOException) {
-
+                    Toast.makeText(this, "ERROR RECORDING", Toast.LENGTH_SHORT).show()
                 }
-                mRecorderDialogView.seekBar.progress = 0
-                chronometer.base = SystemClock.elapsedRealtime()
-                chronometer.start()
-                mRecorderDialogView.start_button.visibility = View.GONE
-                mRecorderDialogView.stop_button.visibility = View.VISIBLE
             }
 
             mRecorderDialogView.stop_button.setOnClickListener {
                 try {
                     recorder.stop()
+                    chronometer.stop()
+                    recorder.reset()
                     recorder.release()
+
+                    chronometer.base = SystemClock.elapsedRealtime()
+                    mRecorderDialogView.play_button.visibility = View.VISIBLE
+                    mRecorderDialogView.stop_button.visibility = View.GONE
+                    seekBar.visibility = View.VISIBLE
                 } catch (e: IOException) {
+                    Toast.makeText(this, "ERROR STOPPING RECORDING", Toast.LENGTH_SHORT).show()
                 }
-                chronometer.stop()
-                chronometer.base = SystemClock.elapsedRealtime()
-                mRecorderDialogView.play_button.visibility = View.VISIBLE
-                mRecorderDialogView.stop_button.visibility = View.GONE
-                mRecorderDialogView.seekBar.visibility = View.VISIBLE
             }
 
             mRecorderDialogView.play_button.setOnClickListener {
                 mRecorderDialogView.play_button.visibility = View.GONE
                 mRecorderDialogView.pause_button.visibility = View.VISIBLE
-                player = MediaPlayer()
 
-                try {
-                    player.setDataSource(fileName)
-                    player.prepare()
+                if (isPaused) {
+                    isPaused = false
                     player.start()
-                } catch (e: IOException) {
+                    chronometer.base = SystemClock.elapsedRealtime() - player.currentPosition
+                    chronometer.start()
+
+                } else if (havePlayed) {
+                    try {
+                        seekBar.progress = lastProgress
+                        player.seekTo(lastProgress)
+                        player.start()
+                        chronometer.start()
+
+
+                    } catch (e: IOException) {
+                        Toast.makeText(this, "ERROR PLAYING RECORDING", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    player = MediaPlayer()
+                    try {
+                        seekBar.progress = lastProgress
+                        player.setDataSource(fileName)
+                        player.prepare()
+                        player.start()
+                        player.seekTo(lastProgress)
+                        mRecorderDialogView.seekBar.max = player.duration
+                        Log.i(TAG, "recording duration: " + player.duration.toString() )
+                        chronometer.start()
+                        seekBarUpdate()
+                        havePlayed = true
+
+                    } catch (e: IOException) {
+                        Toast.makeText(this, "ERROR PLAYING RECORDING", Toast.LENGTH_SHORT).show()
+                    }
 
                 }
 
-                mRecorderDialogView.seekBar.progress = lastProgress
-                player.seekTo(lastProgress)
-                mRecorderDialogView.seekBar.max = player.duration
-                seekBarUpdate()
-                chronometer.start()
+
 
                 player.setOnCompletionListener (MediaPlayer.OnCompletionListener {
                     chronometer.stop()
                     chronometer.base = SystemClock.elapsedRealtime()
                     player.seekTo(0)
+                    lastProgress = 0;
                     mRecorderDialogView.play_button.visibility = View.VISIBLE
                     mRecorderDialogView.pause_button.visibility = View.GONE
                 })
 
-                seekBar1.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                         if (player != null && fromUser) {
-                            player!!.seekTo(progress)
-                            chronometer.base = SystemClock.elapsedRealtime() - player!!.currentPosition
+                            player.seekTo(progress)
+                            chronometer.base = SystemClock.elapsedRealtime() - player.currentPosition
                             lastProgress = progress
                         }
                     }
                     override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
-                    override fun onStopTrackingTouch(seekBar: SeekBar) {}
+                    override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    }
                 })
 
 
@@ -187,11 +218,14 @@ class LoggingActivity : Activity() {
 
             mRecorderDialogView.pause_button.setOnClickListener {
                 try {
-                    player.release()
+                    isPaused = true
+                    player.pause()
+                    chronometer.stop()
+                    mRecorderDialogView.play_button.visibility = View.VISIBLE
+                    mRecorderDialogView.pause_button.visibility = View.GONE
                 } catch (e: Exception) {
-
+                    Toast.makeText(this, "ERROR STOPPING RECORDING", Toast.LENGTH_LONG).show()
                 }
-                chronometer.stop()
             }
 
 
@@ -200,8 +234,9 @@ class LoggingActivity : Activity() {
 
         }
 
-
-        // Picture Logging
+        /*******************
+         * PICTURE LOGGING *
+         *******************/
 
         imageButton.setOnClickListener {
             val mPictureDialogView = LayoutInflater.from(this).inflate(R.layout.picture_dialog, null)
@@ -237,71 +272,97 @@ class LoggingActivity : Activity() {
 
         }
 
+        /**************************
+         * SUBMIT BUTTON FUNCTION *
+         **************************/
+
         val submitButton = findViewById<Button>(R.id.submit)
         submitButton.setOnClickListener {
 
-            //Toast.makeText(this, "Logged submitted", Toast.LENGTH_LONG).show()
-            Toast.makeText(this, logging.text.toString(), Toast.LENGTH_LONG).show()
+            val mSubmitView = LayoutInflater.from(this).inflate(R.layout.submit_dialog, null)
+            val mSubmitBuilder = AlertDialog.Builder(this)
+                .setView(mSubmitView)
+                .setTitle("Submit")
+            val mSubmitDialog = mSubmitBuilder.show()
 
-            //Need to set up a request permisson result situation
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PermissionInfo.PROTECTION_NORMAL);
+            mSubmitView.cancel_button1.setOnClickListener { mSubmitDialog.dismiss() }
 
-            } else {
-                Log.i(null, "permission already granted")
-            }
+            mSubmitView.submit_button1.setOnClickListener {
 
-            val dirNameDate: String = dateToEnter.toString()
-            val directory = File(applicationContext.getExternalFilesDir(
-               null), dirNameDate + "/")
-            Log.e(null, directory.toString())
-            //val thepath = "/storage/emulated/0/Android/data/com.example.dailyjournalgroup9/files/"
-            if (!directory?.mkdirs()!!) {
-                Log.e(null, "Directory not created")
-            }
+                //Toast.makeText(this, "Logged submitted", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, logging.text.toString(), Toast.LENGTH_LONG).show()
 
-            var log = logging.text.toString()
+                //Need to set up a request permisson result situation
+                if (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PermissionInfo.PROTECTION_NORMAL);
 
-            var outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory,getResources().getString(R.string.text_file))))
-            outputStreamWriter.append(log)
-            outputStreamWriter.close()
-
-            outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory, getResources().getString(R.string.emotion_file))))
-            outputStreamWriter.append(emotion)
-            outputStreamWriter.close()
-
-//            val logfile = File(directory, getResources().getString(R.string.text_file))
-//
-
-            currDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-
-            var path = applicationContext.getExternalFilesDir(null).toString()
-//            Log.i(TAG, "Path: $path")
-
-            var file = File(path, "$currDate.jpg")
-//
-//            Log.i(TAG, "File: $file")
-
-            try {
-                val stream = FileOutputStream(file)
-                if (pictureTaken) {
-                    image.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                    stream.flush()
-                    stream.close()
                 } else {
-                    Toast.makeText(this, "bitmap is null", Toast.LENGTH_LONG).show()
+                    Log.i(null, "permission already granted")
                 }
 
-            } catch( e: IOException) {
-                Toast.makeText(this, "image saved", Toast.LENGTH_LONG).show()
+                val dirNameDate: String = dateToEnter.toString()
+                val directory = File(applicationContext.getExternalFilesDir(
+                    null), dirNameDate + "/")
+                Log.e(null, directory.toString())
+                //val thepath = "/storage/emulated/0/Android/data/com.example.dailyjournalgroup9/files/"
+                if (!directory?.mkdirs()!!) {
+                    Log.e(null, "Directory not created")
+                }
+
+                var log = logging.text.toString()
+
+                var outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory,getResources().getString(R.string.text_file))))
+                outputStreamWriter.append(log)
+                outputStreamWriter.close()
+
+                outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory, getResources().getString(R.string.emotion_file))))
+                outputStreamWriter.append(emotion)
+                outputStreamWriter.close()
+
+
+                /********************
+                 * RECORDING SAVING *
+                 ********************/
+
+                if (recordedVoice) {
+                    val recordedAudioFile = File(fileName)
+                    val path = applicationContext.getExternalFilesDir(null) as File
+                    val recordFile = File(path.absolutePath + "/$dateToEnter.mp3")
+                    Log.i(TAG, "file name: $fileName")
+                    recordedAudioFile.renameTo(recordFile)
+
+                }
+
+                /******************
+                 * PICTURE SAVING *
+                 ******************/
+
+                if(pictureTaken) {
+                    var path = applicationContext.getExternalFilesDir(null).toString()
+                    var file = File(path, "$dateToEnter.jpg")
+                    try {
+                        val stream = FileOutputStream(file)
+                        image.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                        stream.flush()
+                        stream.close()
+
+                    } catch( e: IOException) {
+                        Toast.makeText(this, "EXCEPTION", Toast.LENGTH_LONG).show()
+                    }
+
+                }  else {
+                    Toast.makeText(this, "No image", Toast.LENGTH_LONG).show()
+                }
+
+                val myIntent = Intent(this@LoggingActivity, MainActivity::class.java)
+                this@LoggingActivity.startActivity(myIntent)
+
             }
 
 
-            val myIntent = Intent(this@LoggingActivity, MainActivity::class.java)
-            this@LoggingActivity.startActivity(myIntent)
         }
 
     }
@@ -309,10 +370,6 @@ class LoggingActivity : Activity() {
     private fun takePicture() {
 
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-//        Log.i(TAG, "photo file name: $photoFileName");
-//        create a photo file using date
-//        photoFile = getPhotoFile(photoFileName)
 
         if (takePictureIntent.resolveActivity(this.packageManager) != null) {
             startActivityForResult(takePictureIntent, REQUEST_CODE)
@@ -390,9 +447,9 @@ class LoggingActivity : Activity() {
     private var runnable: Runnable = Runnable { seekBarUpdate() }
 
     private fun seekBarUpdate() {
-        if (player != null) {
+        if (player != null && !isPaused) {
             val mCurrentPosition = player.currentPosition
-            seekBar1.progress = mCurrentPosition
+            seekBar.progress = mCurrentPosition
             lastProgress = mCurrentPosition
         }
         mHandler.postDelayed(runnable, 100)
@@ -404,7 +461,6 @@ class LoggingActivity : Activity() {
         private const val RECORD_PERMISSION_CODE = 111
         private const val WRITE_PERMISSION_CODE = 69
         private const val REQUEST_CODE = 42;
-        private const val FILE_NAME = "photo1.jpg"
         private const val TAG = "Logging Activity"
     }
 }

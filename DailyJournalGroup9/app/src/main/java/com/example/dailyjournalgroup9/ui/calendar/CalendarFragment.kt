@@ -1,5 +1,6 @@
 package com.example.dailyjournalgroup9.ui.calendar
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ import com.example.dailyjournalgroup9.Entry
 import com.example.dailyjournalgroup9.LoggedActivity
 import com.example.dailyjournalgroup9.LoggingActivity
 import com.example.dailyjournalgroup9.R
+import kotlinx.android.synthetic.main.logentry_dialog.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -140,6 +142,11 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             "onDayClick: $date",
             Toast.LENGTH_SHORT
         ).show()
+
+
+
+
+
         
         if (robotoCalendarView.currentMonth.getDay(date) != null) {
             val intentActivity = Intent(context, LoggedActivity::class.java)
@@ -149,12 +156,22 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             intentActivity.putExtra("emotion", dayEntry.emotion);
             startActivity(intentActivity)
         } else {
-            //we probably don't want to let them log days in the future
-            val logIntent = Intent (context, LoggingActivity::class.java)
-            logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date));
-            startActivity(logIntent)
-        }
-        //if log doesn't exist, either do nothing or show toast
+
+            // if day is future -> can't log
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.logentry_dialog, null)
+            val dialogBuilder = AlertDialog.Builder(context)
+                .setView(dialogView)
+                .setTitle("Alert")
+            val mSubmitDialog = dialogBuilder.show()
+
+                dialogView.no_button.setOnClickListener { mSubmitDialog.dismiss() }
+
+                dialogView.yes_button.setOnClickListener { val logIntent = Intent (context, LoggingActivity::class.java)
+                logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date))
+                    startActivity(logIntent)
+                    mSubmitDialog.dismiss()}
+      }
+
     }
 
     override fun onDayLongClick(date: Date) {
