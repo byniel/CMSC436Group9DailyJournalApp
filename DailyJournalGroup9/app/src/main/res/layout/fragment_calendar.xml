@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.calendar.CalendarFragment">
+    tools:context=".ui.calendar.CalendarFragment"
+    android:background="@color/roboto_calendar_background">
 
     <com.example.dailyjournalgroup9.ui.calendar.RobotoCalendarView
         android:id="@+id/robotoCalendarPicker"
@@ -19,40 +20,28 @@
 
     </com.example.dailyjournalgroup9.ui.calendar.RobotoCalendarView>
 
-    <TextView
-        android:id="@+id/text_gallery"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.977" />
-
     <Spinner
         android:id="@+id/moods_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/media_spinner"
         app:layout_constraintEnd_toEndOf="@+id/media_spinner"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/media_spinner" />
+        app:layout_constraintStart_toStartOf="@+id/media_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/robotoCalendarPicker"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/media_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/text_gallery"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.528"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.94" />
+        app:layout_constraintTop_toBottomOf="@+id/robotoCalendarPicker"
+        app:layout_constraintVertical_bias="0.678" />
 </androidx.constraintlayout.widget.ConstraintLayout>

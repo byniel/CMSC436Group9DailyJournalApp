@@ -156,7 +156,6 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             intentActivity.putExtra("emotion", dayEntry.emotion);
             startActivity(intentActivity)
         } else {
-
             // if day is future -> can't log
             val dialogView = LayoutInflater.from(context).inflate(R.layout.logentry_dialog, null)
             val dialogBuilder = AlertDialog.Builder(context)
@@ -166,12 +165,13 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
 
                 dialogView.no_button.setOnClickListener { mSubmitDialog.dismiss() }
 
-                dialogView.yes_button.setOnClickListener { val logIntent = Intent (context, LoggingActivity::class.java)
-                logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date))
+                dialogView.yes_button.setOnClickListener {
+                    val logIntent = Intent (context, LoggingActivity::class.java)
+                    logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date))
                     startActivity(logIntent)
-                    mSubmitDialog.dismiss()}
+                    mSubmitDialog.dismiss()
+                }
       }
-
     }
 
     override fun onDayLongClick(date: Date) {
