@@ -12,20 +12,17 @@ import com.example.dailyjournalgroup9.R
 
 class SettingsFragment : Fragment() {
 
-    private lateinit var slideshowViewModel: SettingsViewModel
+    private lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        slideshowViewModel =
+        settingsViewModel =
                 ViewModelProviders.of(this).get(SettingsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
-        val textView: TextView = root.findViewById(R.id.text_slideshow)
-        slideshowViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
+        val root = inflater.inflate(R.layout.fragment_settings, container, false)
+        
         return root
     }
 }

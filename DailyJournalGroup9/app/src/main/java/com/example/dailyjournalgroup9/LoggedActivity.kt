@@ -30,7 +30,8 @@ private lateinit var player : MediaPlayer
 private lateinit var seekBar : SeekBar
 private val mHandler = Handler()
 private var lastProgress = 0
-
+private var isPaused = false
+private var havePlayed = false
 class LoggedActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,33 +89,61 @@ class LoggedActivity : Activity() {
                 val mRecorderDialogBuilder = AlertDialog.Builder(this)
                         .setView(mRecorderDialogView)
                         .setTitle("Recording")
-                mRecorderDialogBuilder.show()
+               val mRecorderDialog = mRecorderDialogBuilder.show()
+
+
+
                 seekBar = mRecorderDialogView.seekBar2
                 seekBar.progress = 0
 
                 mRecorderDialogView.play_button.setOnClickListener {
                     mRecorderDialogView.play_button.visibility = View.GONE
                     mRecorderDialogView.pause_button.visibility = View.VISIBLE
-                    player = MediaPlayer()
 
-                    try {
-                        player.setDataSource(audiopath.toString())
-                        player.prepare()
+                    if (isPaused) {
+                        isPaused = false
                         player.start()
-                    } catch (e: IOException) {
+                        chronometer.base = SystemClock.elapsedRealtime() - player.currentPosition
+                        chronometer.start()
+
+                    } else if (havePlayed) {
+                        try {
+                            seekBar.progress = lastProgress
+                            player.seekTo(lastProgress)
+                            player.start()
+                            chronometer.start()
+
+                        } catch (e: IOException) {
+                            Toast.makeText(this, "ERROR PLAYING RECORDING", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        player = MediaPlayer()
+                        try {
+                            seekBar.progress = 0
+                            player.setDataSource(audiopath.toString())
+                            player.prepare()
+                            player.start()
+                            player.seekTo(0)
+                            lastProgress = 0
+                            seekBar.max = player.duration
+                            Log.i(TAG, "recording duration: " + player.duration.toString() )
+                            chronometer.start()
+                            seekBarUpdate()
+                            havePlayed = true
+
+                        } catch (e: IOException) {
+                            Toast.makeText(this, "ERROR PLAYING RECORDING", Toast.LENGTH_SHORT).show()
+                        }
 
                     }
 
-                    seekBar.progress = lastProgress
-                    player.seekTo(lastProgress)
-                    seekBar.max = player.duration
-                    seekBarUpdate()
-                    chronometer.start()
+
 
                     player.setOnCompletionListener (MediaPlayer.OnCompletionListener {
                         chronometer.stop()
                         chronometer.base = SystemClock.elapsedRealtime()
                         player.seekTo(0)
+                        lastProgress = 0
                         mRecorderDialogView.play_button.visibility = View.VISIBLE
                         mRecorderDialogView.pause_button.visibility = View.GONE
                     })
@@ -122,14 +151,15 @@ class LoggedActivity : Activity() {
                     seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                             if (player != null && fromUser) {
-                                player!!.seekTo(progress)
-                                chronometer.base = SystemClock.elapsedRealtime() - player!!.currentPosition
+                                player.seekTo(progress)
+                                chronometer.base = SystemClock.elapsedRealtime() - player.currentPosition
                                 lastProgress = progress
                             }
                         }
                         override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
-                        override fun onStopTrackingTouch(seekBar: SeekBar) {}
+                        override fun onStopTrackingTouch(seekBar: SeekBar) {
+                        }
                     })
 
 
@@ -137,18 +167,36 @@ class LoggedActivity : Activity() {
 
                 mRecorderDialogView.pause_button.setOnClickListener {
                     try {
-                        player.release()
+                        isPaused = true
+                        player.pause()
+                        chronometer.stop()
+                        mRecorderDialogView.play_button.visibility = View.VISIBLE
+                        mRecorderDialogView.pause_button.visibility = View.GONE
                     } catch (e: Exception) {
-
+                        Toast.makeText(this, "ERROR STOPPING RECORDING", Toast.LENGTH_LONG).show()
                     }
-                    chronometer.stop()
                 }
 
+                mRecorderDialog.setOnDismissListener {
+                    Toast.makeText(this, "DISMISS", Toast.LENGTH_LONG).show()
 
+                        if (havePlayed) {
+                            havePlayed = false
+                            player.stop()
+                            player.release()
+                            lastProgress = 0
+                            if (isPaused) {
+                                isPaused = false
+                            }
+                        }
+
+                    }
 
             } else {
                 Toast.makeText(this, "No Recording Saved", Toast.LENGTH_LONG).show()
             }
+
+
         }
 
 
@@ -164,7 +212,7 @@ class LoggedActivity : Activity() {
     private var runnable: Runnable = Runnable { seekBarUpdate() }
 
     private fun seekBarUpdate() {
-        if (player != null) {
+        if (havePlayed && !isPaused) {
             val mCurrentPosition = player.currentPosition
             seekBar.progress = mCurrentPosition
             lastProgress = mCurrentPosition

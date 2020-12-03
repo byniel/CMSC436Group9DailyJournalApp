@@ -8,8 +8,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_slideshow">Slideshow</string>
     <string name="menu_calendar">Calendar</string>
+    <string name="menu_settings">Settings</string>
 
     <string name="not_logged_button">Add entry for today</string>
     <string name="logged_button">View entry for today</string>
