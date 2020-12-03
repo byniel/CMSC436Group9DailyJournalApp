@@ -149,7 +149,6 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             intentActivity.putExtra("emotion", dayEntry.emotion);
             startActivity(intentActivity)
         } else {
-            //we probably don't want to let them log days in the future
             val logIntent = Intent (context, LoggingActivity::class.java)
             logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date));
             startActivity(logIntent)

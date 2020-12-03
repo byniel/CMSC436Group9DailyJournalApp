@@ -77,7 +77,9 @@ class HomeFragment : Fragment() {
 
             }
 
-            today = Entry(emotion.toString(), text.toString(), Date(), null, null)
+
+            //FIX THIS
+            today = Entry(emotion.toString(), text.toString(), Date(), false, false)
             log_button.text = getString(R.string.logged_button)
             welcome_text.text = getString(R.string.welcome_logged)
             log_button.setOnClickListener {

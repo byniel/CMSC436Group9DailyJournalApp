@@ -10,9 +10,12 @@ import java.io.OutputStreamWriter;
 import java.text.DateFormatSymbols;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class Month {
     private String name;
@@ -66,11 +69,11 @@ public class Month {
                         filtered.put(e.date.getDate(), e.emotion);
                     }
                 } else if (mediaFilter.equals("picture")) {
-                    if (e.emotion.equals(moodFilter) && e.picture != null) {
+                    if (e.emotion.equals(moodFilter) && e.picture) {
                         filtered.put(e.date.getDate(), e.emotion);
                     }
                 } else if (mediaFilter.equals("audio")) {
-                    if (e.emotion.equals(moodFilter) && e.audio != null) {
+                    if (e.emotion.equals(moodFilter) && e.audio) {
                         filtered.put(e.date.getDate(), e.emotion);
                     }
                 }
@@ -88,11 +91,11 @@ public class Month {
                         filtered.put(e.date.getDate(), e.emotion);
                     }
                 } else if (mediaFilter.equals("picture")) {
-                    if (e.picture != null) {
+                    if (e.picture) {
                         filtered.put(e.date.getDate(), e.emotion);
                     }
                 } else if (mediaFilter.equals("audio")) {
-                    if (e.audio != null) {
+                    if (e.audio) {
                         filtered.put(e.date.getDate(), e.emotion);
                     }
                 }
@@ -102,124 +105,6 @@ public class Month {
                 filtered.put(e.date.getDate(), e.emotion);
             }
         }
-//        if (name.equals("November")) {
-//            if (mediaFilter == null) {
-//                if (moodFilter == null) {
-//                    filtered.put(1,"content");
-//                    filtered.put(4,"content");
-//                    filtered.put(14,"content");
-//                    filtered.put(12,"content");
-//                    filtered.put(15,"content");
-//                    filtered.put(7,"veryhappy");
-//                    filtered.put(10,"notgreat");
-//                    filtered.put(11,"notgreat");
-//                    filtered.put(27,"neutral");
-//                    filtered.put(17,"sad");
-//                    filtered.put(30,"content");
-//                } else if (moodFilter.equals("content")) {
-//                    filtered.put(1,"content");
-//                    filtered.put(4,"content");
-//                    filtered.put(14,"content");
-//                    filtered.put(12,"content");
-//                    filtered.put(15,"content");
-//                    filtered.put(30,"content");
-//                } else if (moodFilter.equals("veryhappy")) {
-//                    filtered.put(7,"veryhappy");
-//                } else if (moodFilter.equals("notgreat")) {
-//                    filtered.put(10,"notgreat");
-//                    filtered.put(11,"notgreat");
-//                } else if (moodFilter.equals("sad")) {
-//                    filtered.put(17,"sad");
-//                } else {
-//                    filtered.put(27,"neutral");
-//                }
-//            } else if (mediaFilter.equals("text")) {
-//                if (moodFilter == null) {
-//                    filtered.put(1, "content");
-//                    filtered.put(4, "content");
-//                    filtered.put(7, "veryhappy");
-//                    filtered.put(10, "notgreat");
-//                } else if (moodFilter.equals("content")) {
-//                    filtered.put(1, "content");
-//                    filtered.put(4, "content");
-//                } else if (moodFilter.equals("veryhappy")) {
-//                    filtered.put(7, "veryhappy");
-//                } else if (moodFilter.equals("notgreat")) {
-//                    filtered.put(10, "notgreat");
-//                } else {
-//
-//                }
-//            } else if (mediaFilter.equals("picture")) {
-//                if (moodFilter == null) {
-//                    filtered.put(11,"notgreat");
-//                    filtered.put(14,"content");
-//                    filtered.put(27,"neutral");
-//                } else if (moodFilter.equals("content")) {
-//                    filtered.put(14,"content");
-//                } else if (moodFilter.equals("netural")) {
-//                    filtered.put(27,"neutral");
-//                } else if (moodFilter.equals("notgreat")) {
-//                    filtered.put(11,"notgreat");
-//                } else {
-//
-//                }
-//            } else if (mediaFilter.equals("audio")) {
-//                if (moodFilter == null) {
-//                    filtered.put(12,"content");
-//                    filtered.put(15,"content");
-//                    filtered.put(17,"sad");
-//                    filtered.put(30,"content");
-//                } else if (moodFilter.equals("content")) {
-//                    filtered.put(12,"content");
-//                    filtered.put(15,"content");
-//                    filtered.put(30,"content");
-//                } else if (moodFilter.equals("sad")) {
-//                    filtered.put(17,"sad");
-//                } else {
-//                }
-//            } else {
-//                if (moodFilter == null) {
-//                    filtered.put(1,"content");
-//                    filtered.put(4,"content");
-//                    filtered.put(14,"content");
-//                    filtered.put(12,"content");
-//                    filtered.put(15,"content");
-//                    filtered.put(7,"veryhappy");
-//                    filtered.put(10,"notgreat");
-//                    filtered.put(11,"notgreat");
-//                    filtered.put(27,"neutral");
-//                    filtered.put(17,"sad");
-//                    filtered.put(30,"content");
-//                } else if (moodFilter.equals("content")) {
-//                    filtered.put(1,"content");
-//                    filtered.put(4,"content");
-//                    filtered.put(14,"content");
-//                    filtered.put(12,"content");
-//                    filtered.put(15,"content");
-//                    filtered.put(30,"content");
-//                } else if (moodFilter.equals("veryhappy")) {
-//                    filtered.put(7,"veryhappy");
-//                } else if (moodFilter.equals("notgreat")) {
-//                    filtered.put(10,"notgreat");
-//                    filtered.put(11,"notgreat");
-//                } else if (moodFilter.equals("sad")) {
-//                    filtered.put(17,"sad");
-//                } else {
-//                    filtered.put(27,"neutral");
-//                }
-//            }
-//        }
-//
-//        if (name.equals("December")) {
-//            if (mediaFilter == null) {
-//                if (moodFilter == null) {
-//                    filtered.put(8, "sad");
-//                    filtered.put(14, "sad");
-//                    filtered.put(27, "veryhappy");
-//                    filtered.put(30, "veryhappy");
-//                }
-//            }
-//        }
 
 
         return filtered;
@@ -234,6 +119,7 @@ public class Month {
         String dirNameDate;
         File directory;
         HashSet<Entry> entries = new HashSet<>();
+        String path = context.getExternalFilesDir(null).toString();
         for (int i = 1; i <= daysInMonth; i++) {
             String day = "" + i;
             String month = "" + monthInt;
@@ -244,7 +130,6 @@ public class Month {
                 month = "0" + monthInt;
             }
             dirNameDate = day + "-" + month + "-" + yearInt;
-//            directory = new File(Environment.getExternalStorageDirectory(), dirNameDate + "/");
             directory = new File(context.getExternalFilesDir(null), dirNameDate + "/");
             if (directory.exists() && directory.isDirectory()) {
 
@@ -280,7 +165,21 @@ public class Month {
 
                 }
 
-                Entry entry = new Entry(emotion.toString(), text.toString(), new Date(currDay.getYear(), currDay.getMonth(), i), null, null);
+
+                File pictureFile = new File(path, dirNameDate + ".jpg");
+                boolean picture = false;
+                if (pictureFile.exists()) {
+                    picture = true;
+                }
+
+                File audioFile = new File(path, dirNameDate + ".mp3");
+                boolean audio = false;
+                if (audioFile.exists()) {
+                    audio = true;
+                }
+
+
+                Entry entry = new Entry(emotion.toString(), text.toString(), new Date(currDay.getYear(), currDay.getMonth(), i), picture, audio);
                 entries.add(entry);
             }
         }
@@ -292,9 +191,14 @@ public class Month {
     }
 
     public Entry getDay (Date day) {
+        Calendar cal = Calendar.getInstance(Locale.getDefault());
+        cal.setTime(day);
         for (Entry entry : entries) {
-            if (entry.date.getMonth() == day.getMonth() && entry.date.getYear() == day.getYear() &&
-            entry.date.getDay() == day.getDay()) {
+            Calendar entryCal = Calendar.getInstance(Locale.getDefault());
+            entryCal.setTime(entry.date);
+            if (entryCal.get(Calendar.DAY_OF_MONTH) == cal.get(Calendar.DAY_OF_MONTH) &&
+                    entryCal.get(Calendar.MONTH) == cal.get(Calendar.MONTH) &&
+                    entryCal.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
                 return entry;
             }
         }

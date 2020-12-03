@@ -6,11 +6,10 @@ public class Entry {
     String emotion;
     String text;
     Date date;
-    //how are pictures stored and retrieved?
-    String picture;
-    String audio;
+    boolean picture;
+    boolean audio;
 
-    public Entry (String emotion, String text, Date date, String picture, String audio) {
+    public Entry (String emotion, String text, Date date, boolean picture, boolean audio) {
         this.emotion = emotion;
         this.text = text;
         this.date = date;
@@ -22,7 +21,7 @@ public class Entry {
         return date;
     }
 
-    public String getAudio() {
+    public boolean getAudio() {
         return audio;
     }
 
@@ -30,7 +29,7 @@ public class Entry {
         return emotion;
     }
 
-    public String getPicture() {
+    public boolean getPicture() {
         return picture;
     }
 
