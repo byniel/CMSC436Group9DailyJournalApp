@@ -42,9 +42,9 @@ class HomeFragment : Fragment() {
 
         val sharedPreferences = activity?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
 
-        val name = sharedPreferences?.getString("USER_NAME", "No Name")
-
-        textView.text = "Welcome $name!"
+        val name = sharedPreferences?.getString("USER_NAME", "No Name").toString()
+        Log.i("TAG", name);
+        textView.text = "Welcome " + name + "!"
 
         val log_button = root.findViewById<Button>(R.id.logging_button)
         val welcome_text = root.findViewById<TextView>(R.id.welcome_text)
