@@ -2,13 +2,13 @@ package com.example.dailyjournalgroup9
 
 import android.Manifest
 import android.app.Activity
-
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.PermissionInfo
-import android.app.AlertDialog
-
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -23,7 +23,9 @@ import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.logged_layout.*
 import kotlinx.android.synthetic.main.logging_layout.*
+import kotlinx.android.synthetic.main.logging_layout.imageButton2
 import kotlinx.android.synthetic.main.picture_dialog.view.*
 import kotlinx.android.synthetic.main.recording_dialog.*
 import kotlinx.android.synthetic.main.recording_dialog.view.*
@@ -89,7 +91,7 @@ class LoggingActivity : Activity() {
         val logging = findViewById<EditText>(R.id.textLog)
         val recordingButton = findViewById<Button>(R.id.recordingButton)
         val imageButton = findViewById<ImageButton>(R.id.imageButton2)
-
+        val defaultImage = findViewById<ImageView>(R.id.defaultImage)
 
         /***************************
          * AUDIO RECORDING LOGGING *
@@ -97,7 +99,10 @@ class LoggingActivity : Activity() {
 
         recordingButton.setOnClickListener {
 
-            val mRecorderDialogView = LayoutInflater.from(this).inflate(R.layout.recording_dialog, null)
+            val mRecorderDialogView = LayoutInflater.from(this).inflate(
+                R.layout.recording_dialog,
+                null
+            )
             val chronometer = mRecorderDialogView.chronometer
             val mRecorderDialogBuilder = AlertDialog.Builder(this)
                     .setView(mRecorderDialogView)
@@ -105,7 +110,12 @@ class LoggingActivity : Activity() {
             val mRecorderDialog = mRecorderDialogBuilder.show()
             // check permission
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE), 111)
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ), 111
+                )
             }
 
             mRecorderDialogView.start_button.setOnClickListener {
@@ -186,7 +196,7 @@ class LoggingActivity : Activity() {
                         player.seekTo(0)
                         lastProgress = 0;
                         seek.max = player.duration
-                        Log.i(TAG, "recording duration: " + player.duration.toString() )
+                        Log.i(TAG, "recording duration: " + player.duration.toString())
                         chronometer.start()
                         seekBarUpdate()
 
@@ -199,7 +209,7 @@ class LoggingActivity : Activity() {
 
 
 
-                player.setOnCompletionListener (MediaPlayer.OnCompletionListener {
+                player.setOnCompletionListener(MediaPlayer.OnCompletionListener {
                     chronometer.stop()
                     chronometer.base = SystemClock.elapsedRealtime()
                     player.seekTo(0)
@@ -209,13 +219,19 @@ class LoggingActivity : Activity() {
                 })
 
                 seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    override fun onProgressChanged(
+                        seekBar: SeekBar,
+                        progress: Int,
+                        fromUser: Boolean
+                    ) {
                         if (player != null && fromUser) {
                             player.seekTo(progress)
-                            chronometer.base = SystemClock.elapsedRealtime() - player.currentPosition
+                            chronometer.base =
+                                SystemClock.elapsedRealtime() - player.currentPosition
                             lastProgress = progress
                         }
                     }
+
                     override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
                     override fun onStopTrackingTouch(seekBar: SeekBar) {
@@ -275,7 +291,10 @@ class LoggingActivity : Activity() {
          *******************/
 
         imageButton.setOnClickListener {
-            val mPictureDialogView = LayoutInflater.from(this).inflate(R.layout.picture_dialog, null)
+            val mPictureDialogView = LayoutInflater.from(this).inflate(
+                R.layout.picture_dialog,
+                null
+            )
             val mPictureDialogBuilder = AlertDialog.Builder(this)
                     .setView(mPictureDialogView)
                     .setTitle("Picture")
@@ -329,19 +348,27 @@ class LoggingActivity : Activity() {
                 Toast.makeText(this, logging.text.toString(), Toast.LENGTH_LONG).show()
 
                 //Need to set up a request permisson result situation
-                if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
                     != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), PermissionInfo.PROTECTION_NORMAL);
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                        PermissionInfo.PROTECTION_NORMAL
+                    );
 
                 } else {
                     Log.i(null, "permission already granted")
                 }
 
                 val dirNameDate: String = dateToEnter.toString()
-                val directory = File(applicationContext.getExternalFilesDir(
-                    null), dirNameDate + "/")
+                val directory = File(
+                    applicationContext.getExternalFilesDir(
+                        null
+                    ), dirNameDate + "/"
+                )
                 Log.e(null, directory.toString())
                 //val thepath = "/storage/emulated/0/Android/data/com.example.dailyjournalgroup9/files/"
                 if (!directory?.mkdirs()!!) {
@@ -350,11 +377,27 @@ class LoggingActivity : Activity() {
 
                 var log = logging.text.toString()
 
-                var outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory,getResources().getString(R.string.text_file))))
+                var outputStreamWriter = OutputStreamWriter(
+                    FileOutputStream(
+                        File(
+                            directory, getResources().getString(
+                                R.string.text_file
+                            )
+                        )
+                    )
+                )
                 outputStreamWriter.append(log)
                 outputStreamWriter.close()
 
-                outputStreamWriter = OutputStreamWriter(FileOutputStream(File(directory, getResources().getString(R.string.emotion_file))))
+                outputStreamWriter = OutputStreamWriter(
+                    FileOutputStream(
+                        File(
+                            directory, getResources().getString(
+                                R.string.emotion_file
+                            )
+                        )
+                    )
+                )
                 outputStreamWriter.append(emotion)
                 outputStreamWriter.close()
 
@@ -385,7 +428,7 @@ class LoggingActivity : Activity() {
                         stream.flush()
                         stream.close()
 
-                    } catch( e: IOException) {
+                    } catch (e: IOException) {
                         Toast.makeText(this, "EXCEPTION", Toast.LENGTH_LONG).show()
                     }
 
@@ -423,9 +466,9 @@ class LoggingActivity : Activity() {
     }
 
     override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
     ) {
         when(requestCode) {
             PERMISSION_CODE -> {
@@ -457,6 +500,9 @@ class LoggingActivity : Activity() {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
              image = data?.extras?.get("data")  as Bitmap
 //             image = BitmapFactory.decodeFile(photoFile.absolutePath)
+
+            val defaultImage = findViewById<ImageView>(R.id.defaultImage)
+            defaultImage.setBackgroundResource(0)
             imageButton2.setImageBitmap(image)
             pictureTaken  = true
 
@@ -466,6 +512,7 @@ class LoggingActivity : Activity() {
             val d = data?.data as Uri
             image = MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, d)
             pictureTaken  = true
+            defaultImage.setBackgroundResource(0)
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
