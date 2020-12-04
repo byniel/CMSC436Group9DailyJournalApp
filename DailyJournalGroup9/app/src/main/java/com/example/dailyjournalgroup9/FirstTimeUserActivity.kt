@@ -52,6 +52,7 @@ class FirstTimeUserActivity : AppCompatActivity() {
                     putString("USER_NAME", userName)
                     putString("USER_BDAY", userBday)
                     putBoolean("FirstTime", false)
+                    putBoolean("DailyNotification", false)
 
                 }
                 editor.commit()
