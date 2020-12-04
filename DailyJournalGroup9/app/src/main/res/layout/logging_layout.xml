@@ -7,41 +7,61 @@
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/displayDate"
+        android:layout_width="271dp"
+        android:layout_height="63dp"
+        android:gravity="center"
+        android:text="BLANK"
+        android:textColor="@color/colorAccent"
+        android:textSize="36dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/veryhappy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/veryhappy"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:background="@color/colorAccent"
+        android:adjustViewBounds="true"
+        android:background="@drawable/emojibackgroundbuttonveryhappy"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_veryhappy"
         app:layout_constraintBottom_toTopOf="@+id/textLog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_veryhappy" />
+        app:layout_constraintTop_toBottomOf="@+id/displayDate" />
 
     <ImageButton
         android:id="@+id/notgreat"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:background="@color/colorAccent"
+        android:adjustViewBounds="true"
+        android:background="@drawable/emojibackgroundbuttonnotgreat"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_notgreat"
         app:layout_constraintBottom_toTopOf="@+id/textLog"
         app:layout_constraintEnd_toStartOf="@+id/neutral"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/sad"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_notgreat" />
+        app:layout_constraintTop_toBottomOf="@+id/displayDate" />
 
     <EditText
         android:id="@+id/textLog"
         android:layout_width="367dp"
         android:layout_height="208dp"
         android:background="@drawable/round_text_inputfield"
+        android:gravity="top|left"
         android:hint="What did you get up to today?"
         app:layout_constraintBottom_toTopOf="@+id/imageButton2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/veryhappy" />
+        app:layout_constraintTop_toBottomOf="@+id/notgreat" />
 
     <Button
         android:id="@+id/recordingButton"
@@ -59,15 +79,14 @@
         android:id="@+id/imageButton2"
         android:layout_width="373dp"
         android:layout_height="212dp"
-        android:background="@drawable/round_text_inputfield"
         android:adjustViewBounds="true"
+        android:background="@drawable/round_text_inputfield"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/recordingButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textLog"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@+id/textLog" />
 
     <Button
         android:id="@+id/submit"
@@ -85,37 +104,45 @@
         android:id="@+id/neutral"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:background="@color/colorAccent"
+        android:adjustViewBounds="true"
+        android:background="@drawable/emojibackgroundbuttonneutral"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_neutral"
+        tools:layout_editor_absoluteX="178dp"
+        tools:layout_editor_absoluteY="111dp"
         app:layout_constraintBottom_toTopOf="@+id/textLog"
         app:layout_constraintEnd_toStartOf="@+id/content"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/notgreat"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_neutral" />
+        app:layout_constraintTop_toBottomOf="@+id/displayDate" />
 
     <ImageButton
         android:id="@+id/content"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:background="@color/colorAccent"
+        android:adjustViewBounds="true"
+        android:background="@drawable/emojibackgroundbuttoncontent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_content"
         app:layout_constraintBottom_toTopOf="@+id/textLog"
         app:layout_constraintEnd_toStartOf="@+id/veryhappy"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/neutral"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_content" />
+        app:layout_constraintTop_toBottomOf="@+id/displayDate" />
 
     <ImageButton
         android:id="@+id/sad"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:background="@color/colorAccent"
+        android:adjustViewBounds="true"
+        android:background="@drawable/emojibackgroundbuttonsad"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_sad"
         app:layout_constraintBottom_toTopOf="@+id/textLog"
         app:layout_constraintEnd_toStartOf="@+id/notgreat"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_sad" />
+        app:layout_constraintTop_toBottomOf="@+id/displayDate" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

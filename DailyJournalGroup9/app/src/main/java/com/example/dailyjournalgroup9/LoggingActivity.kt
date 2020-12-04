@@ -81,7 +81,10 @@ class LoggingActivity : Activity() {
         }
 
         val intent = intent
-        dateToEnter = intent.getStringExtra("date").toString();
+        dateToEnter = intent.getStringExtra("date").toString()
+
+        val dateView = findViewById<TextView>(R.id.displayDate)
+        dateView.text = dateToEnter
 
         val logging = findViewById<EditText>(R.id.textLog)
         val recordingButton = findViewById<Button>(R.id.recordingButton)

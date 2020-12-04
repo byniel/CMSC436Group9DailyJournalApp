@@ -67,15 +67,23 @@ class LoggedActivity : Activity() {
         val emotionView = findViewById<ImageView>(R.id.neutral)
         if (emotion == "sad") {
             emotionView.setImageResource(R.drawable.ic_sad)
+            emotionView.setBackgroundResource(R.drawable.emojibackgroundbuttonsad)
         } else if (emotion == "notgreat") {
             emotionView.setImageResource(R.drawable.ic_notgreat)
+            emotionView.setBackgroundResource(R.drawable.emojibackgroundbuttonnotgreat)
         } else if (emotion == "neutral") {
             emotionView.setImageResource(R.drawable.ic_neutral)
+            emotionView.setBackgroundResource(R.drawable.emojibackgroundbuttonneutral)
         } else if (emotion == "content") {
             emotionView.setImageResource(R.drawable.ic_content)
+            emotionView.setBackgroundResource(R.drawable.emojibackgroundbuttoncontent)
         } else {
             emotionView.setImageResource(R.drawable.ic_veryhappy)
+            emotionView.setBackgroundResource(R.drawable.emojibackgroundbuttonveryhappy)
         }
+
+        val dateView = findViewById<TextView>(R.id.displayDate)
+        dateView.text = date
 
         logging.text = text;
 

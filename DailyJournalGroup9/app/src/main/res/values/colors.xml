@@ -15,4 +15,9 @@
     <color name="roboto_calendar_circle_1">#EB5757</color>
     <color name="roboto_calendar_circle_2">#55c6da</color>
     <color name="roboto_calendar_month_arrow">#55c6da</color>
+    <color name="sad">#FF0000</color>
+    <color name="notgreat">#FFA500</color>
+    <color name="neutral">#F3DD4E</color>
+    <color name="content">#08B8F2</color>
+    <color name="veryhappy">#73EF9D</color>
 </resources>
