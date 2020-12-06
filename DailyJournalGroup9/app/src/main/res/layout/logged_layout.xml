@@ -61,7 +61,7 @@
         android:textSize="36dp"
         android:text="BLANK"
         android:textStyle="bold"
-        android:textColor="@color/colorAccent"
+        android:textColor="#00dec5"
         app:layout_constraintBottom_toTopOf="@+id/textLog"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

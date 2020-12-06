@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <!--    <TextView-->
+<!--        android:id="@+id/user_name"-->
+<!--        android:layout_width="381dp"-->
+<!--        android:layout_height="47dp"-->
+<!--        android:textAlignment="center"-->
+<!--        android:textSize="30sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.466"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.377" />-->
+
     <TextView
         android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
@@ -14,34 +27,35 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27" />
-
-    <Button
-        android:id="@+id/logging_button"
-        android:layout_width="324dp"
-        android:layout_height="105dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/not_logged_button"
-        android:background="@drawable/round_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.578"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="381dp"
-        android:layout_height="47dp"
-        android:textAlignment="center"
-        android:textSize="30sp"
+    <Button
+        android:id="@+id/logging_button"
+        android:layout_width="218dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/round_button"
+        android:text="@string/not_logged_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.647"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.169" />
+        app:layout_constraintVertical_bias="0.768" />
+
+    <com.example.dailyjournalgroup9.ui.home.RobotoWeekView
+        android:id="@+id/weeklyCalendar"
+        android:layout_width="400dp"
+        android:layout_height="181dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.003">
+
+    </com.example.dailyjournalgroup9.ui.home.RobotoWeekView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

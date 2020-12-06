@@ -7,8 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.PermissionInfo
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -23,14 +21,17 @@ import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.logged_layout.*
 import kotlinx.android.synthetic.main.logging_layout.*
-import kotlinx.android.synthetic.main.logging_layout.imageButton2
 import kotlinx.android.synthetic.main.picture_dialog.view.*
 import kotlinx.android.synthetic.main.recording_dialog.*
 import kotlinx.android.synthetic.main.recording_dialog.view.*
 import kotlinx.android.synthetic.main.submit_dialog.view.*
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStreamWriter
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 private lateinit var date: TextView
@@ -85,8 +86,16 @@ class LoggingActivity : Activity() {
         val intent = intent
         dateToEnter = intent.getStringExtra("date").toString()
 
+        val cal = Calendar.getInstance()
+        val dateInfo = dateToEnter.split("-");
+        Log.i(null, dateInfo[0])
+        Log.i(null, dateInfo[1])
+        Log.i(null, dateInfo[2])
+        cal.set(dateInfo[2].toInt(), dateInfo[1].toInt() - 1, dateInfo[0].toInt())
+        val monthName = SimpleDateFormat("MMMM").format(cal.time) + " " + cal.get(Calendar.DAY_OF_MONTH)
+
         val dateView = findViewById<TextView>(R.id.displayDate)
-        dateView.text = dateToEnter
+        dateView.text = monthName
 
         val logging = findViewById<EditText>(R.id.textLog)
         val recordingButton = findViewById<Button>(R.id.recordingButton)

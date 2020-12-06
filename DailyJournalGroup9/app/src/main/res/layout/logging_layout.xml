@@ -13,7 +13,7 @@
         android:layout_height="63dp"
         android:gravity="center"
         android:text="BLANK"
-        android:textColor="@color/colorAccent"
+        android:textColor="#00dec5"
         android:textSize="36dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/veryhappy"
