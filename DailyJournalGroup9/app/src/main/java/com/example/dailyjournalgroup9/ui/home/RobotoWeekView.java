@@ -587,7 +587,6 @@ public class RobotoWeekView extends LinearLayout {
             int day = auxCalendar.get(Calendar.DAY_OF_MONTH);
 
 
-
             dayOfTheMonthContainer = rootView.findViewWithTag(DAY_OF_THE_MONTH_LAYOUT + i);
             dayOfTheMonthText = rootView.findViewWithTag(DAY_OF_THE_MONTH_TEXT + i);
             if (dayOfTheMonthText == null) {

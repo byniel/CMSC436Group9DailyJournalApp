@@ -176,11 +176,22 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
     }
 
     override fun onDayLongClick(date: Date?) {
-        Toast.makeText(
-            context,
-            "onDayLongClick: $date",
-            Toast.LENGTH_SHORT
-        ).show()
+        if (robotoWeekView.currentMonth.getDay(date) != null) {
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.replaceentry_dialog, null)
+            val dialogBuilder = AlertDialog.Builder(context)
+                .setView(dialogView)
+                .setTitle("Alert")
+            val mSubmitDialog = dialogBuilder.show()
+
+            dialogView.no_button.setOnClickListener { mSubmitDialog.dismiss() }
+
+            dialogView.yes_button.setOnClickListener {
+                val logIntent = Intent (context, LoggingActivity::class.java)
+                logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date))
+                startActivity(logIntent)
+                mSubmitDialog.dismiss()
+            }
+        }
     }
 
     override fun onRightButtonClick() {
