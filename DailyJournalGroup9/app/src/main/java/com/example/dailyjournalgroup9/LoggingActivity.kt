@@ -87,8 +87,9 @@ class LoggingActivity : Activity() {
         val intent = intent
         dateToEnter = intent.getStringExtra("date").toString()
 
+
         val cal = Calendar.getInstance()
-        val dateInfo = dateToEnter.split("-");
+        val dateInfo = dateToEnter.split("-")
         Log.i(null, dateInfo[0])
         Log.i(null, dateInfo[1])
         Log.i(null, dateInfo[2])
@@ -103,7 +104,17 @@ class LoggingActivity : Activity() {
         val logging = findViewById<EditText>(R.id.textLog)
         val recordingButton = findViewById<Button>(R.id.recordingButton)
         val imageButton = findViewById<ImageButton>(R.id.imageButton2)
-        val defaultImage = findViewById<ImageView>(R.id.defaultImage)
+
+        if (intent.getStringExtra("text") != null) {
+            val currText = intent.getStringExtra("text").toString()
+            logging.setText(currText)
+        }
+
+        if (intent.getStringExtra("emotion") != null) {
+            emotion = intent.getStringExtra("emotion").toString()
+        }
+
+
 
         /***************************
          * AUDIO RECORDING LOGGING *
@@ -206,7 +217,7 @@ class LoggingActivity : Activity() {
                         player.prepare()
                         player.start()
                         player.seekTo(0)
-                        lastProgress = 0;
+                        lastProgress = 0
                         seek.max = player.duration
                         Log.i(TAG, "recording duration: " + player.duration.toString())
                         chronometer.start()
@@ -225,7 +236,7 @@ class LoggingActivity : Activity() {
                     chronometer.stop()
                     chronometer.base = SystemClock.elapsedRealtime()
                     player.seekTo(0)
-                    lastProgress = 0;
+                    lastProgress = 0
                     mRecorderDialogView.play_button.visibility = View.VISIBLE
                     mRecorderDialogView.pause_button.visibility = View.GONE
                 })
@@ -278,7 +289,7 @@ class LoggingActivity : Activity() {
 
             mRecorderDialog.setOnDismissListener {
                 if (recordedVoice && !saveRecording) {
-                   recordedVoice = false;
+                   recordedVoice = false
                     if (havePlayed) {
                         havePlayed = false
                         player.stop()
@@ -317,7 +328,7 @@ class LoggingActivity : Activity() {
                         val permissions = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         requestPermissions(permissions, WRITE_PERMISSION_CODE)
                     } else {
-                        takePicture();
+                        takePicture()
                     }
                     pictureDialog.dismiss()
                 }
@@ -365,7 +376,7 @@ class LoggingActivity : Activity() {
                         this,
                         arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                         PermissionInfo.PROTECTION_NORMAL
-                    );
+                    )
 
                 } else {
                     Log.i(null, "permission already granted")
@@ -379,7 +390,7 @@ class LoggingActivity : Activity() {
                 )
                 Log.e(null, directory.toString())
                 //val thepath = "/storage/emulated/0/Android/data/com.example.dailyjournalgroup9/files/"
-                if (!directory?.mkdirs()!!) {
+                if (!directory.mkdirs()) {
                     Log.e(null, "Directory not created")
                 }
 
@@ -388,7 +399,7 @@ class LoggingActivity : Activity() {
                 var outputStreamWriter = OutputStreamWriter(
                     FileOutputStream(
                         File(
-                            directory, getResources().getString(
+                            directory, resources.getString(
                                 R.string.text_file
                             )
                         )
@@ -400,7 +411,7 @@ class LoggingActivity : Activity() {
                 outputStreamWriter = OutputStreamWriter(
                     FileOutputStream(
                         File(
-                            directory, getResources().getString(
+                            directory, resources.getString(
                                 R.string.emotion_file
                             )
                         )
@@ -549,7 +560,7 @@ class LoggingActivity : Activity() {
         private const val PERMISSION_CODE = 1001
         private const val RECORD_PERMISSION_CODE = 111
         private const val WRITE_PERMISSION_CODE = 69
-        private const val REQUEST_CODE = 42;
+        private const val REQUEST_CODE = 42
         private const val TAG = "Logging Activity"
     }
 }

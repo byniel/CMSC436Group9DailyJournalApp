@@ -32,7 +32,7 @@ class SettingsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPreferences = activity?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)!!
-        notificationOn = sharedPreferences?.getBoolean("DailyNotification", false)!!
+        notificationOn = sharedPreferences.getBoolean("DailyNotification", false)
         Log.i("Settings", notificationOn.toString())
 
     }
@@ -51,12 +51,12 @@ class SettingsFragment : Fragment() {
         val reminderNotificationSwitch = root.findViewById<Switch>(R.id.switch1)
 
 
-        reminderNotificationSwitch.isChecked = notificationOn!!
+        reminderNotificationSwitch.isChecked = notificationOn
 
         reminderNotificationSwitch.setOnCheckedChangeListener { _, isChecked ->
 //            val message = if (isChecked) "Switch on" else "Switch off"
 //            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-            val editor = sharedPreferences?.edit()
+            val editor = sharedPreferences.edit()
             if (isChecked) {
                 editor?.apply{
                     putBoolean("DailyNotification", true)
@@ -92,10 +92,6 @@ class SettingsFragment : Fragment() {
 
         }
         return root
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
     }
 
     private fun createNotificationChannel() {

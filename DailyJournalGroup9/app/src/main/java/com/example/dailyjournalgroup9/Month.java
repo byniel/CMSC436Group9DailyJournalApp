@@ -19,13 +19,11 @@ import java.util.TimeZone;
 
 // Collection of entries updated for each calendar month
 public class Month {
-    private String name;
     private HashSet<Entry> entries;
     private String moodFilter;
     private String mediaFilter;
 
     public Month(String name) {
-        this.name = name;
         entries = new HashSet<Entry>();
     }
 
@@ -112,8 +110,10 @@ public class Month {
 
     // Sets the entries field of a month based on reading all the log files in the same month as currDay
     public void readDataForMonth(Date currDay, Context context) {
-        int yearInt = currDay.getYear() + 1900;
-        int monthInt = currDay.getMonth() + 1;
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        calendar.setTime(currDay);
+        int yearInt = calendar.get(Calendar.YEAR);
+        int monthInt = calendar.get(Calendar.MONTH) + 1;
         YearMonth yearMonthObject = YearMonth.of(yearInt, monthInt);
         int daysInMonth = yearMonthObject.lengthOfMonth();
         String dirNameDate;
@@ -184,7 +184,8 @@ public class Month {
                 } else {
                     textStr = text.toString();
                 }
-                Entry entry = new Entry(emotion.toString(), textStr, new Date(currDay.getYear(), currDay.getMonth(), i), picture, audio);
+                calendar.set(Calendar.DAY_OF_MONTH, i);
+                Entry entry = new Entry(emotion.toString(), textStr, calendar.getTime(), picture, audio);
                 entries.add(entry);
             }
         }

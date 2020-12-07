@@ -86,13 +86,13 @@ class LoggedActivity : Activity() {
         }
 
         val cal = Calendar.getInstance()
-        val dateInfo = date!!.split("-");
+        val dateInfo = date!!.split("-")
         cal.set(dateInfo[2].toInt(), dateInfo[1].toInt() - 1, dateInfo[0].toInt())
         val monthName = SimpleDateFormat("MMMM").format(cal.time) + " " + cal.get(Calendar.DAY_OF_MONTH)
         val dateView = findViewById<TextView>(R.id.displayDate)
         dateView.text = monthName
 
-        logging.text = text;
+        logging.text = text
 
         val playButton = findViewById<Button>(R.id.recordingButton)
 

@@ -12,7 +12,7 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
         iv_note.alpha = 0f
-        iv_note.animate().setDuration(1500).alpha(1f).withEndAction() {
+        iv_note.animate().setDuration(1500).alpha(1f).withEndAction {
             // action after splash screen ends
 
 
@@ -22,7 +22,7 @@ class SplashScreenActivity : AppCompatActivity() {
             // if user's first time, go to FirstTimeUser screen
             if (firstTime) {
                 val i = Intent(this, FirstTimeUserActivity::class.java)
-                startActivity(i);
+                startActivity(i)
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish() // prevents from going back to splash screen again once app starts
 

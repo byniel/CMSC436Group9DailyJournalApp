@@ -17,16 +17,16 @@ class AlarmReceiver : BroadcastReceiver() {
         val intent = Intent(p0!!, RepeatActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
 
-        val pendingIntent = PendingIntent.getActivity(p0!!, 200, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(p0, 200, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        builder = NotificationCompat.Builder(p0!!, "all_notifications")
+        builder = NotificationCompat.Builder(p0, "all_notifications")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_baseline_import_contacts_24)
                 .setContentTitle("JRNL Notification")
                 .setContentText("Have you logged for today? :)")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-        notificationManager = NotificationManagerCompat.from(p0!!)
+        notificationManager = NotificationManagerCompat.from(p0)
 
         if (p1!!.action.equals("MY_NOTIFICATION_MESSAGE")) {
             Log.i("ALARM", "HEY")
