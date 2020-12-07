@@ -254,36 +254,36 @@ public class RobotoCalendarView extends LinearLayout {
     }
 
     public void markDayAsSelectedDay(@NonNull Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-
-        // Clear previous current day mark
-        clearSelectedDay();
-
-        // Store current values as last values
-        lastSelectedDayCalendar = calendar;
-
-        // Mark current day as selected
-        ViewGroup dayOfTheMonthBackground = getDayOfMonthBackground(calendar);
-        dayOfTheMonthBackground.setBackgroundResource(R.drawable.ring_background);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(date);
+//
+//        // Clear previous current day mark
+//        clearSelectedDay();
+//
+//        // Store current values as last values
+//        lastSelectedDayCalendar = calendar;
+//
+//        // Mark current day as selected
+//        ViewGroup dayOfTheMonthBackground = getDayOfMonthBackground(calendar);
+////        dayOfTheMonthBackground.setBackgroundResource(R.drawable.ring_background);
     }
 
     public void clearSelectedDay() {
-        if (lastSelectedDayCalendar != null) {
-            ViewGroup dayOfTheMonthBackground = getDayOfMonthBackground(lastSelectedDayCalendar);
-
-            // If it's today, keep the current day style
-            Calendar nowCalendar = Calendar.getInstance();
-            if (nowCalendar.get(Calendar.YEAR) == lastSelectedDayCalendar.get(Calendar.YEAR) && nowCalendar.get(Calendar.DAY_OF_YEAR) == lastSelectedDayCalendar.get(Calendar.DAY_OF_YEAR)) {
-                dayOfTheMonthBackground.setBackgroundResource(android.R.color.transparent);
-                markDayAsCurrentDay();
-            } else {
-                dayOfTheMonthBackground.setBackgroundResource(android.R.color.transparent);
-            }
-
-            TextView dayOfTheMonth = getDayOfMonthText(lastSelectedDayCalendar);
-            dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_day_of_the_month_font));
-        }
+//        if (lastSelectedDayCalendar != null) {
+//            ViewGroup dayOfTheMonthBackground = getDayOfMonthBackground(lastSelectedDayCalendar);
+//
+//            // If it's today, keep the current day style
+//            Calendar nowCalendar = Calendar.getInstance();
+//            if (nowCalendar.get(Calendar.YEAR) == lastSelectedDayCalendar.get(Calendar.YEAR) && nowCalendar.get(Calendar.DAY_OF_YEAR) == lastSelectedDayCalendar.get(Calendar.DAY_OF_YEAR)) {
+//                dayOfTheMonthBackground.setBackgroundResource(android.R.color.transparent);
+//                markDayAsCurrentDay();
+//            } else {
+//                dayOfTheMonthBackground.setBackgroundResource(android.R.color.transparent);
+//            }
+//
+//            TextView dayOfTheMonth = getDayOfMonthText(lastSelectedDayCalendar);
+//            dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_day_of_the_month_font));
+//        }
     }
 
     public void setShortWeekDays(boolean shortWeekDays) {
