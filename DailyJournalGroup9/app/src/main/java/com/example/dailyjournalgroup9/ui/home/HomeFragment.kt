@@ -193,10 +193,4 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
             }
         }
     }
-
-    override fun onRightButtonClick() {
-    }
-
-    override fun onLeftButtonClick() {
-    }
 }
