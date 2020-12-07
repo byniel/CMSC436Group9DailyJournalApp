@@ -2,6 +2,7 @@ package com.example.dailyjournalgroup9;
 
 import java.util.Date;
 
+// Class to keep track of individual logs
 public class Entry {
     String emotion;
     String text;

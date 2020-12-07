@@ -53,7 +53,7 @@ import com.example.dailyjournalgroup9.R;
  * @author Marco Hernaiz Cao
  */
 
-// external library with changes that allow for calendar view customization
+// external library with changes by the group that allow for calendar view customization
 public class RobotoCalendarView extends LinearLayout {
 
     private static final String DAY_OF_THE_WEEK_TEXT = "dayOfTheWeekText";
@@ -608,8 +608,6 @@ public class RobotoCalendarView extends LinearLayout {
         int month = auxCalendar.get(Calendar.MONTH);
         int firstDayOfMonth = auxCalendar.get(Calendar.DAY_OF_WEEK);
         TextView dayOfTheMonthText;
-        ViewGroup dayOfTheMonthContainer;
-        ViewGroup dayOfTheMonthLayout;
 
         HashMap<Integer,String> entries = currMonth.getEntriesAndFilter();
 

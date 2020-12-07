@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.TimeZone;
 
+// Collection of entries updated for each calendar month
 public class Month {
     private String name;
     private HashSet<Entry> entries;
@@ -32,14 +33,6 @@ public class Month {
         this(name);
         this.moodFilter = moodFilter;
         this.mediaFilter = mediaFilter;
-    }
-
-    public void setEntries(HashSet<Entry> entries) {
-        this.entries = entries;
-    }
-
-    public void addEntry (Entry entry) {
-        this.entries.add(entry);
     }
 
     public String getMediaFilter() {
@@ -60,6 +53,8 @@ public class Month {
         mediaFilter = mediaType;
     }
 
+    // Returns a map of the day of the month to the emoji type
+    // Filters the map based on the media and mood filters set by the calendar
     public HashMap<Integer, String> getEntriesAndFilter() {
         Calendar cal = Calendar.getInstance(Locale.getDefault());
         HashMap<Integer, String> filtered = new HashMap<>();
@@ -115,11 +110,11 @@ public class Month {
         return filtered;
     }
 
+    // Sets the entries field of a month based on reading all the log files in the same month as currDay
     public void readDataForMonth(Date currDay, Context context) {
         int yearInt = currDay.getYear() + 1900;
         int monthInt = currDay.getMonth() + 1;
         YearMonth yearMonthObject = YearMonth.of(yearInt, monthInt);
-        //not correct...hmm
         int daysInMonth = yearMonthObject.lengthOfMonth();
         String dirNameDate;
         File directory;
@@ -196,10 +191,7 @@ public class Month {
         this.entries = entries;
     }
 
-    public HashSet<Entry> getAllEntries() {
-        return entries;
-    }
-
+    // Checks whether there is an entry for a given day and returns that entry if there is
     public Entry getDay (Date day) {
         Calendar cal = Calendar.getInstance(Locale.getDefault());
         cal.setTime(day);

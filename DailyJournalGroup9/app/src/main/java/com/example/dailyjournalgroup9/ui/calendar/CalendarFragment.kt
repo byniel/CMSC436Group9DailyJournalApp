@@ -129,19 +129,10 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
 
         return root
     }
-//
-//    protected fun attachBaseContext(newBase: Context?) {
-//        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-//    }
 
     // If an entry exists for the day, goes to the log activity displaying that info
     // Otherwise, asks if you want to add a log for the given day.
     override fun onDayClick(date: Date) {
-//        Toast.makeText(
-//            context,
-//            "onDayClick: $date",
-//            Toast.LENGTH_SHORT
-//        ).show()
         
         if (robotoCalendarView.currentMonth.getDay(date) != null) {
             val intentActivity = Intent(context, LoggedActivity::class.java)
