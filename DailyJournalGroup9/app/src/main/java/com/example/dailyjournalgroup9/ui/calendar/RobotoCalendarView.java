@@ -129,7 +129,7 @@ public class RobotoCalendarView extends LinearLayout {
             }
 
             currMonth.readDataForMonth(calendar.getTime(), getContext());
-            updateView();
+//            updateView();
 
             return true;
         }
@@ -641,10 +641,13 @@ public class RobotoCalendarView extends LinearLayout {
 
         // fetch a set of entries corresponding to each mood type per month
 
+
+
         Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
         Calendar markMood = Calendar.getInstance(Locale.getDefault());
         auxCalendar.setTime(currentCalendar.getTime());
         auxCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        currMonth.readDataForMonth(auxCalendar.getTime(), getContext());
         markMood.setTime(currentCalendar.getTime());
         markMood.set(Calendar.DAY_OF_MONTH, 1);
         int month = auxCalendar.get(Calendar.MONTH);
