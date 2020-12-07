@@ -95,7 +95,6 @@ class LoggedActivity : Activity() {
 
         playButton.setOnClickListener {
             if (audiopath.exists()) {
-                Toast.makeText(this, "SOUND SAVED", Toast.LENGTH_LONG).show()
                 val mRecorderDialogView = LayoutInflater.from(this).inflate(R.layout.recording_player_dialog, null)
                 val chronometer = mRecorderDialogView.chronometer
                 val mRecorderDialogBuilder = AlertDialog.Builder(this)
@@ -190,8 +189,6 @@ class LoggedActivity : Activity() {
                 }
 
                 mRecorderDialog.setOnDismissListener {
-                    Toast.makeText(this, "DISMISS", Toast.LENGTH_LONG).show()
-
                         if (havePlayed) {
                             havePlayed = false
                             player.stop()
@@ -210,16 +207,6 @@ class LoggedActivity : Activity() {
 
 
         }
-
-
-
-
-
-
-//        val playButton = findViewById<Button>(R.id.submit)
-//        playButton.setOnClickListener {
-//            Toast.makeText(this, "PLAYING SOUND", Toast.LENGTH_LONG).show()
-//        }
     }
     private var runnable: Runnable = Runnable { seekBarUpdate() }
 
