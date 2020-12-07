@@ -13,8 +13,9 @@
         android:layout_height="@dimen/roboto_calendar_day_of_the_month_background_size"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/circle"
-        android:tag="dayOfTheMonthBackground">
+        android:tag="dayOfTheMonthBackground" >
+<!--        android:background="@drawable/circle"-->
+
 
         <TextView
             android:id="@+id/textView"

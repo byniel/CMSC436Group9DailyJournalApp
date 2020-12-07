@@ -137,16 +137,11 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
 
     // We'll need to fetch the data for that day and populate log with it
     override fun onDayClick(date: Date) {
-        Toast.makeText(
-            context,
-            "onDayClick: $date",
-            Toast.LENGTH_SHORT
-        ).show()
-
-
-
-
-
+//        Toast.makeText(
+//            context,
+//            "onDayClick: $date",
+//            Toast.LENGTH_SHORT
+//        ).show()
         
         if (robotoCalendarView.currentMonth.getDay(date) != null) {
             val intentActivity = Intent(context, LoggedActivity::class.java)
@@ -156,7 +151,6 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             intentActivity.putExtra("emotion", dayEntry.emotion);
             startActivity(intentActivity)
         } else {
-            // if day is future -> can't log
             val dialogView = LayoutInflater.from(context).inflate(R.layout.logentry_dialog, null)
             val dialogBuilder = AlertDialog.Builder(context)
                 .setView(dialogView)
@@ -175,27 +169,38 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
     }
 
     override fun onDayLongClick(date: Date) {
-        Toast.makeText(
-            context,
-            "onDayLongClick: $date",
-            Toast.LENGTH_SHORT
-        ).show()
+        if (robotoCalendarView.currentMonth.getDay(date) != null) {
+            val dialogView = LayoutInflater.from(context).inflate(R.layout.replaceentry_dialog, null)
+            val dialogBuilder = AlertDialog.Builder(context)
+                .setView(dialogView)
+                .setTitle("Alert")
+            val mSubmitDialog = dialogBuilder.show()
+
+            dialogView.no_button.setOnClickListener { mSubmitDialog.dismiss() }
+
+            dialogView.yes_button.setOnClickListener {
+                val logIntent = Intent (context, LoggingActivity::class.java)
+                logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date))
+                startActivity(logIntent)
+                mSubmitDialog.dismiss()
+            }
+        }
     }
 
     //remove moods from previous month
     override fun onRightButtonClick() {
-        Toast.makeText(
-            context,
-            "onRightButtonClick!",
-            Toast.LENGTH_SHORT
-        ).show()
+//        Toast.makeText(
+//            context,
+//            "onRightButtonClick!",
+//            Toast.LENGTH_SHORT
+//        ).show()
 
     }
 
     //remove moods from past month
     override fun onLeftButtonClick() {
-        Toast.makeText(context, "onLeftButtonClick!", Toast.LENGTH_SHORT)
-            .show()
+//        Toast.makeText(context, "onLeftButtonClick!", Toast.LENGTH_SHORT)
+//            .show()
     }
 
     companion object {

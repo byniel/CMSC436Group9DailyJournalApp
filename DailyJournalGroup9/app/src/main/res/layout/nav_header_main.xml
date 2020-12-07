@@ -18,7 +18,8 @@
         android:layout_height="108dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/jrnllogo" />
+        android:src="@drawable/jrnllogo2"
+        android:background="#07000000"/>
 
     <TextView
         android:layout_width="match_parent"

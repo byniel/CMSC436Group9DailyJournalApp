@@ -13,7 +13,7 @@
         android:layout_height="63dp"
         android:gravity="center"
         android:text="BLANK"
-        android:textColor="@color/colorAccent"
+        android:textColor="#00dec5"
         android:textSize="36dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/veryhappy"
@@ -75,6 +75,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
 
+
     <ImageButton
         android:id="@+id/imageButton2"
         android:layout_width="373dp"
@@ -87,6 +88,17 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textLog" />
+
+    <ImageView
+        android:id="@+id/defaultImage"
+        android:layout_width="148dp"
+        android:layout_height="145dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+        app:layout_constraintEnd_toEndOf="@+id/imageButton2"
+        app:layout_constraintStart_toStartOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="@+id/imageButton2"
+        android:background="@drawable/ic_baseline_image_search_24"
+        />
 
     <Button
         android:id="@+id/submit"
