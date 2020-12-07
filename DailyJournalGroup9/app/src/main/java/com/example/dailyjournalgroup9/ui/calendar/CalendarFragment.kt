@@ -51,33 +51,33 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             // Apply the adapter to the spinner
             moods_spinner.adapter = adapter
         }
-        moods_spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+        moods_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>?,
                 selectedItemView: View?,
                 position: Int,
                 id: Long
             ) {
-                robotoCalendarView.clearMoods();
+                robotoCalendarView.clearMoods()
                 if (position == 0) {
-                    robotoCalendarView.currentMonth.setMoodFilter(null);
+                    robotoCalendarView.currentMonth.moodFilter = null
                 } else if (position == 5) {
-                    robotoCalendarView.currentMonth.setMoodFilter("sad");
+                    robotoCalendarView.currentMonth.moodFilter = "sad"
                 } else if (position == 4) {
-                    robotoCalendarView.currentMonth.setMoodFilter("notgreat");
+                    robotoCalendarView.currentMonth.moodFilter = "notgreat"
                 } else if (position == 3) {
-                    robotoCalendarView.currentMonth.setMoodFilter("neutral");
+                    robotoCalendarView.currentMonth.moodFilter = "neutral"
                 } else if (position == 2) {
-                    robotoCalendarView.currentMonth.setMoodFilter("content");
+                    robotoCalendarView.currentMonth.moodFilter = "content"
                 } else if (position == 1) {
-                    robotoCalendarView.currentMonth.setMoodFilter("veryhappy");
+                    robotoCalendarView.currentMonth.moodFilter = "veryhappy"
                 }
-                robotoCalendarView.drawMoodsFromFilter();
+                robotoCalendarView.drawMoodsFromFilter()
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {
             }
-        })
+        }
 
 
 
@@ -94,29 +94,29 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             media_spinner.adapter = adapter
         }
 
-        media_spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+        media_spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>?,
                 selectedItemView: View?,
                 position: Int,
                 id: Long
             ) {
-                robotoCalendarView.clearMoods();
+                robotoCalendarView.clearMoods()
                 if (position == 0) {
-                    robotoCalendarView.currentMonth.setMediaFilter(null);
+                    robotoCalendarView.currentMonth.mediaFilter = null
                 } else if (position == 1) {
-                    robotoCalendarView.currentMonth.setMediaFilter("text");
+                    robotoCalendarView.currentMonth.mediaFilter = "text"
                 } else if (position == 2) {
-                    robotoCalendarView.currentMonth.setMediaFilter("audio");
+                    robotoCalendarView.currentMonth.mediaFilter = "audio"
                 } else if (position == 3) {
-                    robotoCalendarView.currentMonth.setMediaFilter("picture");
+                    robotoCalendarView.currentMonth.mediaFilter = "picture"
                 }
-                robotoCalendarView.drawMoodsFromFilter();
+                robotoCalendarView.drawMoodsFromFilter()
             }
 
             override fun onNothingSelected(parentView: AdapterView<*>?) {
             }
-        })
+        }
 
         // Set listener, in this case, the same activity
         robotoCalendarView.setRobotoCalendarListener(this)
@@ -136,10 +136,10 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
         
         if (robotoCalendarView.currentMonth.getDay(date) != null) {
             val intentActivity = Intent(context, LoggedActivity::class.java)
-            val dayEntry : Entry =  robotoCalendarView.currentMonth.getDay(date);
-            intentActivity.putExtra("text", dayEntry.text);
-            intentActivity.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(dayEntry.date));
-            intentActivity.putExtra("emotion", dayEntry.emotion);
+            val dayEntry : Entry =  robotoCalendarView.currentMonth.getDay(date)
+            intentActivity.putExtra("text", dayEntry.text)
+            intentActivity.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(dayEntry.date))
+            intentActivity.putExtra("emotion", dayEntry.emotion)
             startActivity(intentActivity)
         } else {
             val dialogView = LayoutInflater.from(context).inflate(R.layout.logentry_dialog, null)
@@ -173,6 +173,13 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
             dialogView.yes_button.setOnClickListener {
                 val logIntent = Intent (context, LoggingActivity::class.java)
                 logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date))
+                val dayEntry : Entry =  robotoCalendarView.currentMonth.getDay(date)
+                if (dayEntry?.text != null && dayEntry.text.trim().isNotEmpty()) {
+                    logIntent.putExtra("text", dayEntry.text)
+                }
+                if (dayEntry?.emotion != null && dayEntry.emotion.trim().isNotEmpty()) {
+                    logIntent.putExtra("emotion", dayEntry.emotion)
+                }
                 startActivity(logIntent)
                 mSubmitDialog.dismiss()
             }

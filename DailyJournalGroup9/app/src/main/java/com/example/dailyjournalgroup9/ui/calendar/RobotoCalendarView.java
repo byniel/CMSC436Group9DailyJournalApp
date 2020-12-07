@@ -85,7 +85,7 @@ public class RobotoCalendarView extends LinearLayout {
             // Extract day selected
             ViewGroup dayOfTheMonthContainer = (ViewGroup) view;
             String tagId = (String) dayOfTheMonthContainer.getTag();
-            tagId = tagId.substring(DAY_OF_THE_MONTH_LAYOUT.length(), tagId.length());
+            tagId = tagId.substring(DAY_OF_THE_MONTH_LAYOUT.length());
             TextView dayOfTheMonthText = view.findViewWithTag(DAY_OF_THE_MONTH_TEXT + tagId);
 
             // Extract the day from the text
@@ -112,7 +112,7 @@ public class RobotoCalendarView extends LinearLayout {
             // Extract day selected
             ViewGroup dayOfTheMonthContainer = (ViewGroup) view;
             String tagId = (String) dayOfTheMonthContainer.getTag();
-            tagId = tagId.substring(DAY_OF_THE_MONTH_LAYOUT.length(), tagId.length());
+            tagId = tagId.substring(DAY_OF_THE_MONTH_LAYOUT.length());
             TextView dayOfTheMonthText = view.findViewWithTag(DAY_OF_THE_MONTH_TEXT + tagId);
 
             // Extract the day from the text

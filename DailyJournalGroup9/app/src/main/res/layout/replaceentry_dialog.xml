@@ -10,7 +10,7 @@
         android:layout_width="231dp"
         android:layout_height="37dp"
         android:layout_marginTop="16dp"
-        android:text="Would you like to replace the entry for this day?"
+        android:text="Would you like to edit the entry for this day?"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

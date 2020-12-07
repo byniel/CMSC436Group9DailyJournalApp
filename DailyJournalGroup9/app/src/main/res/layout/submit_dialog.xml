@@ -11,7 +11,7 @@
         android:layout_width="253dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Would you like to submit? You can hit and hold this day in the calendar to replace it!"
+        android:text="Would you like to submit? You can hit and hold this day in the calendar to edit it!"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

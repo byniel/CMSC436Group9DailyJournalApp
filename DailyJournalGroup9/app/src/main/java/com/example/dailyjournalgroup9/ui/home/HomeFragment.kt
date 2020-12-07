@@ -55,7 +55,7 @@ class HomeFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
 
         val name = sharedPreferences?.getString("USER_NAME", "No Name").toString()
-        Log.i("TAG", name);
+        Log.i("TAG", name)
         textView.text = "Welcome " + name + "!"
 
         val log_button = root.findViewById<Button>(R.id.logging_button)
@@ -75,7 +75,7 @@ class HomeFragment : Fragment() {
 
         // If entry exists for today, ask user if they want to check the log
         if (directory.exists() && directory.isDirectory) {
-            val logfile = File(directory, getResources().getString(R.string.text_file))
+            val logfile = File(directory, resources.getString(R.string.text_file))
             try {
                 val br = BufferedReader(FileReader(logfile))
                 var line = br.readLine()
@@ -90,7 +90,7 @@ class HomeFragment : Fragment() {
 
             }
             val emotion = StringBuilder()
-            val emotionFile = File(directory, getResources().getString(R.string.emotion_file))
+            val emotionFile = File(directory, resources.getString(R.string.emotion_file))
             try {
                 val br = BufferedReader(FileReader(emotionFile))
                 var line = br.readLine()
