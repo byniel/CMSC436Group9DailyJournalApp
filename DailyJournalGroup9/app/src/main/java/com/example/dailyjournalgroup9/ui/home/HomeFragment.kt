@@ -48,22 +48,19 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-//        val textView: TextView = root.findViewById(R.id.text_home)
-//        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
+
 
         robotoWeekView = root.findViewById<RobotoWeekView>(R.id.weeklyCalendar)
         robotoWeekView.setRobotoCalendarListener(this)
 
 
-//        val textView = root.findViewById<TextView>(R.id.user_name)
+        val textView = root.findViewById<TextView>(R.id.user_name)
 
         val sharedPreferences = activity?.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
 
         val name = sharedPreferences?.getString("USER_NAME", "No Name").toString()
         Log.i("TAG", name);
-//        textView.text = "Welcome " + name + "!"
+        textView.text = "Welcome " + name + "!"
 
         val log_button = root.findViewById<Button>(R.id.logging_button)
         val welcome_text = root.findViewById<TextView>(R.id.welcome_text)
@@ -75,9 +72,12 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
                 null
             ), dirNameDate + "/"
         )
-        Log.i(null, directory.toString())
+
+        // Read in today's log to see if it exists
         lateinit var today : Entry
         val text = StringBuilder()
+
+        // If entry exists for today, ask user if they want to check the log
         if (directory.exists() && directory.isDirectory) {
             val logfile = File(directory, getResources().getString(R.string.text_file))
             try {
@@ -108,8 +108,6 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
 
             }
 
-
-            //FIX THIS
             today = Entry(emotion.toString(), text.toString(), Date(), false, false)
             log_button.text = getString(R.string.logged_button)
             welcome_text.text = getString(R.string.welcome_logged)
@@ -128,6 +126,8 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
                 }
                 startActivity(logged_activity_intent)
             }
+
+        // Otherwise, let the user add a log for today
         } else {
             log_button.text = getString(R.string.not_logged_button)
             welcome_text.text = getString(R.string.welcome_not_logged)
@@ -142,12 +142,11 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
             }
         }
 
-        //will need to check if there is a record for the user already...if there is, change text
-
-
         return root
     }
 
+    // If the day clicked has an entry, go to the log with the entry
+    // Otherwise, ask the user if they want to add an entry for the given day
     override fun onDayClick(date: Date?) {
         if (robotoWeekView.currentMonth.getDay(date) != null) {
             val intentActivity = Intent(context, LoggedActivity::class.java)
@@ -157,7 +156,6 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
             intentActivity.putExtra("emotion", dayEntry.emotion);
             startActivity(intentActivity)
         } else {
-            // if day is future -> can't log
             val dialogView = LayoutInflater.from(context).inflate(R.layout.logentry_dialog, null)
             val dialogBuilder = AlertDialog.Builder(context)
                 .setView(dialogView)
@@ -175,6 +173,8 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
         }
     }
 
+    // If there is an entry for the day and they hit and hold that day, give them the option to
+    // overwrite the log.
     override fun onDayLongClick(date: Date?) {
         if (robotoWeekView.currentMonth.getDay(date) != null) {
             val dialogView = LayoutInflater.from(context).inflate(R.layout.replaceentry_dialog, null)
@@ -195,10 +195,8 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
     }
 
     override fun onRightButtonClick() {
-        TODO("Not yet implemented")
     }
 
     override fun onLeftButtonClick() {
-        TODO("Not yet implemented")
     }
 }
