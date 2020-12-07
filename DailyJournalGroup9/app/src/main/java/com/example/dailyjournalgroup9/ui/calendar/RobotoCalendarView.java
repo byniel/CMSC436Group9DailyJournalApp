@@ -120,12 +120,17 @@ public class RobotoCalendarView extends LinearLayout {
 
             markDayAsSelectedDay(calendar.getTime());
 
+
             // Fire event
             if (robotoCalendarListener == null) {
                 throw new IllegalStateException("You must assign a valid RobotoCalendarListener first!");
             } else {
                 robotoCalendarListener.onDayLongClick(calendar.getTime());
             }
+
+            currMonth.readDataForMonth(calendar.getTime(), getContext());
+            updateView();
+
             return true;
         }
     };
