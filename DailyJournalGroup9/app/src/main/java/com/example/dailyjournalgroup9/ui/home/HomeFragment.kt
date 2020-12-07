@@ -50,9 +50,6 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
 
 
-        robotoWeekView = root.findViewById<RobotoWeekView>(R.id.weeklyCalendar)
-        robotoWeekView.setRobotoCalendarListener(this)
-
 
         val textView = root.findViewById<TextView>(R.id.user_name)
 
