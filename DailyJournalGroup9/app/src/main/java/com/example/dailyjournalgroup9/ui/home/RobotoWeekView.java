@@ -273,7 +273,6 @@ public class RobotoWeekView extends LinearLayout {
             // If it's today, keep the current day style
             Calendar nowCalendar = Calendar.getInstance();
             if (nowCalendar.get(Calendar.YEAR) == lastSelectedDayCalendar.get(Calendar.YEAR) && nowCalendar.get(Calendar.DAY_OF_YEAR) == lastSelectedDayCalendar.get(Calendar.DAY_OF_YEAR)) {
-                dayOfTheMonthBackground.setBackgroundResource(R.drawable.ring);
             } else {
                 dayOfTheMonthBackground.setBackgroundResource(android.R.color.transparent);
             }
