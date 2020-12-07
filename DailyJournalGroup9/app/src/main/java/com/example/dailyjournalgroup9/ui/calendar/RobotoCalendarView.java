@@ -95,6 +95,7 @@ public class RobotoCalendarView extends LinearLayout {
             calendar.set(Calendar.DAY_OF_MONTH, Integer.valueOf(dayOfTheMonthText.getText().toString()));
 
             markDayAsSelectedDay(calendar.getTime());
+            markDayAsCurrentDay();
 
             // Fire event
             if (robotoCalendarListener == null) {
@@ -274,7 +275,8 @@ public class RobotoCalendarView extends LinearLayout {
             // If it's today, keep the current day style
             Calendar nowCalendar = Calendar.getInstance();
             if (nowCalendar.get(Calendar.YEAR) == lastSelectedDayCalendar.get(Calendar.YEAR) && nowCalendar.get(Calendar.DAY_OF_YEAR) == lastSelectedDayCalendar.get(Calendar.DAY_OF_YEAR)) {
-                dayOfTheMonthBackground.setBackgroundResource(R.drawable.ring);
+                dayOfTheMonthBackground.setBackgroundResource(android.R.color.transparent);
+                markDayAsCurrentDay();
             } else {
                 dayOfTheMonthBackground.setBackgroundResource(android.R.color.transparent);
             }
