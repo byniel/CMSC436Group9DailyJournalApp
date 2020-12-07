@@ -41,10 +41,11 @@ class LoggedActivity : Activity() {
 
         val intent = intent
 
+        // Get date from intent
         date = intent.getStringExtra("date").toString()
         Log.i(TAG, date)
 
-
+        // Put views on application screen and get paths for resources
         val imageView = findViewById<ImageView>(R.id.imageButton2)
         val logging = findViewById<TextView>(R.id.textLog)
         val path = File(applicationContext.getExternalFilesDir(null), "$date.jpg")
@@ -60,10 +61,12 @@ class LoggedActivity : Activity() {
 
         }
 
+        // Retrieve more data from the intent
         val emotion = intent.getStringExtra("emotion")
         val text = intent.getStringExtra("text")
         val date = intent.getStringExtra("date")
 
+        // Dynamic functionality for display of emoji view in bottom left
         val emotionView = findViewById<ImageView>(R.id.neutral)
         if (emotion == "sad") {
             emotionView.setImageResource(R.drawable.ic_sad)

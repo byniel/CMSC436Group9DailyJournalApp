@@ -57,6 +57,7 @@ class LoggingActivity : Activity() {
 
         setContentView(R.layout.logging_layout)
 
+        // Implement functionality of the emoji buttons
         val sadButton = findViewById<ImageButton>(R.id.sad)
         sadButton.setOnClickListener {
             emotion = "sad"
@@ -94,6 +95,8 @@ class LoggingActivity : Activity() {
         cal.set(dateInfo[2].toInt(), dateInfo[1].toInt() - 1, dateInfo[0].toInt())
         val monthName = SimpleDateFormat("MMMM").format(cal.time) + " " + cal.get(Calendar.DAY_OF_MONTH)
 
+
+        // Display views onto the application screen
         val dateView = findViewById<TextView>(R.id.displayDate)
         dateView.text = monthName
 
