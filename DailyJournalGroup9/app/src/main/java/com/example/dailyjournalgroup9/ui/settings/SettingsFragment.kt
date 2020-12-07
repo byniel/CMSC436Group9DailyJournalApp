@@ -65,8 +65,8 @@ class SettingsFragment : Fragment() {
                 createNotificationChannel()
                 // Daily Notification at 10:30pm
                 val calendar = Calendar.getInstance()
-                calendar.set(Calendar.HOUR_OF_DAY, 22)
-                calendar.set(Calendar.MINUTE, 30)
+                calendar.set(Calendar.HOUR_OF_DAY, 0)
+                calendar.set(Calendar.MINUTE, 17)
                 calendar.set(Calendar.SECOND, 30)
 
                 val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager

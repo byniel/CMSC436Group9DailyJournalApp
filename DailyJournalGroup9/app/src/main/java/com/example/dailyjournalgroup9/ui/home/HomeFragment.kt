@@ -33,10 +33,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
+class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var robotoWeekView: RobotoWeekView
 
 
     override fun onCreateView(
@@ -140,54 +139,5 @@ class HomeFragment : Fragment(), RobotoWeekView.RobotoCalendarListener {
         }
 
         return root
-    }
-
-    // If the day clicked has an entry, go to the log with the entry
-    // Otherwise, ask the user if they want to add an entry for the given day
-    override fun onDayClick(date: Date?) {
-        if (robotoWeekView.currentMonth.getDay(date) != null) {
-            val intentActivity = Intent(context, LoggedActivity::class.java)
-            val dayEntry : Entry =  robotoWeekView.currentMonth.getDay(date);
-            intentActivity.putExtra("text", dayEntry.text);
-            intentActivity.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(dayEntry.date));
-            intentActivity.putExtra("emotion", dayEntry.emotion);
-            startActivity(intentActivity)
-        } else {
-            val dialogView = LayoutInflater.from(context).inflate(R.layout.logentry_dialog, null)
-            val dialogBuilder = AlertDialog.Builder(context)
-                .setView(dialogView)
-                .setTitle("Alert")
-            val mSubmitDialog = dialogBuilder.show()
-
-            dialogView.no_button.setOnClickListener { mSubmitDialog.dismiss() }
-
-            dialogView.yes_button.setOnClickListener {
-                val logIntent = Intent (context, LoggingActivity::class.java)
-                logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date))
-                startActivity(logIntent)
-                mSubmitDialog.dismiss()
-            }
-        }
-    }
-
-    // If there is an entry for the day and they hit and hold that day, give them the option to
-    // overwrite the log.
-    override fun onDayLongClick(date: Date?) {
-        if (robotoWeekView.currentMonth.getDay(date) != null) {
-            val dialogView = LayoutInflater.from(context).inflate(R.layout.replaceentry_dialog, null)
-            val dialogBuilder = AlertDialog.Builder(context)
-                .setView(dialogView)
-                .setTitle("Alert")
-            val mSubmitDialog = dialogBuilder.show()
-
-            dialogView.no_button.setOnClickListener { mSubmitDialog.dismiss() }
-
-            dialogView.yes_button.setOnClickListener {
-                val logIntent = Intent (context, LoggingActivity::class.java)
-                logIntent.putExtra("date", SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(date))
-                startActivity(logIntent)
-                mSubmitDialog.dismiss()
-            }
-        }
     }
 }
