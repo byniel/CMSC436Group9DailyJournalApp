@@ -183,8 +183,13 @@ public class Month {
                     audio = true;
                 }
 
-
-                Entry entry = new Entry(emotion.toString(), text.toString(), new Date(currDay.getYear(), currDay.getMonth(), i), picture, audio);
+                String textStr;
+                if (text.toString().trim().length() == 0) {
+                    textStr = null;
+                } else {
+                    textStr = text.toString();
+                }
+                Entry entry = new Entry(emotion.toString(), textStr, new Date(currDay.getYear(), currDay.getMonth(), i), picture, audio);
                 entries.add(entry);
             }
         }

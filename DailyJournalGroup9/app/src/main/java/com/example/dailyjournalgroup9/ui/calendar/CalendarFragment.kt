@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.example.dailyjournalgroup9.Entry
@@ -135,7 +134,8 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
 //        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
 //    }
 
-    // We'll need to fetch the data for that day and populate log with it
+    // If an entry exists for the day, goes to the log activity displaying that info
+    // Otherwise, asks if you want to add a log for the given day.
     override fun onDayClick(date: Date) {
 //        Toast.makeText(
 //            context,
@@ -168,6 +168,7 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
       }
     }
 
+    // If an entry exists for the day, asks if you want to write over the entry
     override fun onDayLongClick(date: Date) {
         if (robotoCalendarView.currentMonth.getDay(date) != null) {
             val dialogView = LayoutInflater.from(context).inflate(R.layout.replaceentry_dialog, null)
@@ -187,20 +188,10 @@ class CalendarFragment : Fragment(), RobotoCalendarView.RobotoCalendarListener {
         }
     }
 
-    //remove moods from previous month
     override fun onRightButtonClick() {
-//        Toast.makeText(
-//            context,
-//            "onRightButtonClick!",
-//            Toast.LENGTH_SHORT
-//        ).show()
-
     }
 
-    //remove moods from past month
     override fun onLeftButtonClick() {
-//        Toast.makeText(context, "onLeftButtonClick!", Toast.LENGTH_SHORT)
-//            .show()
     }
 
     companion object {

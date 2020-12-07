@@ -59,6 +59,8 @@ import io.github.inflationx.viewpump.ViewPump;
  *
  * @author Marco Hernaiz Cao
  */
+
+// Adapted the month RobotoCalendarView to fit for one week
 public class RobotoWeekView extends LinearLayout {
 
     private static final String DAY_OF_THE_WEEK_TEXT = "dayOfTheWeekText";
@@ -252,16 +254,6 @@ public class RobotoWeekView extends LinearLayout {
         updateView();
     }
 
-    @NonNull
-    public Date getDate() {
-        return currentCalendar.getTime();
-    }
-
-    @Nullable
-    public Date getSelectedDay() {
-        return lastSelectedDayCalendar.getTime();
-    }
-
     public void markDayAsSelectedDay(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -272,24 +264,6 @@ public class RobotoWeekView extends LinearLayout {
         // Store current values as last values
         lastSelectedDayCalendar = calendar;
 
-        // Mark current day as selected
-        ViewGroup dayOfTheMonthBackground = getDayOfMonthBackground(calendar);
-//        dayOfTheMonthBackground.setBackgroundResource(R.drawable.ring_background);
-//        dayOfTheMonthBackground.setBackgroundColor(Color.LTGRAY);
-
-        TextView dayOfTheMonth = getDayOfMonthText(calendar);
-//        dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
-//        dayOfTheMonth.setTextColor(Color.MAGENTA);
-
-        ImageView contentImage = getContentImage(calendar);
-        ImageView veryHappyImage = getVeryHappyImage(calendar);
-//        if (contentImage.getVisibility() == VISIBLE) {
-//            DrawableCompat.setTint(contentImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
-//        }
-//
-//        if (veryHappyImage.getVisibility() == VISIBLE) {
-//            DrawableCompat.setTint(veryHappyImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
-//        }
     }
 
     public void clearSelectedDay() {
@@ -299,30 +273,17 @@ public class RobotoWeekView extends LinearLayout {
             // If it's today, keep the current day style
             Calendar nowCalendar = Calendar.getInstance();
             if (nowCalendar.get(Calendar.YEAR) == lastSelectedDayCalendar.get(Calendar.YEAR) && nowCalendar.get(Calendar.DAY_OF_YEAR) == lastSelectedDayCalendar.get(Calendar.DAY_OF_YEAR)) {
-//                dayOfTheMonthBackground.setBackgroundResource(R.drawable.ring);
             } else {
                 dayOfTheMonthBackground.setBackgroundResource(android.R.color.transparent);
             }
 
             TextView dayOfTheMonth = getDayOfMonthText(lastSelectedDayCalendar);
             dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_day_of_the_month_font));
-
-//            ImageView circleImage1 = getContentImage(lastSelectedDayCalendar);
-//            ImageView circleImage2 = getVeryHappyImage(lastSelectedDayCalendar);
-//            if (circleImage1.getVisibility() == VISIBLE) {
-//                DrawableCompat.setTint(circleImage1.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_circle_1));
-//            }
-//
-//            if (circleImage2.getVisibility() == VISIBLE) {
-//                DrawableCompat.setTint(circleImage2.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_circle_2));
-//            }
         }
     }
 
-    public void setShortWeekDays(boolean shortWeekDays) {
-        this.shortWeekDays = shortWeekDays;
-    }
 
+    // If log indicates given day is very happy, mark emoji on calendar
     public void markVeryHappy(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -337,6 +298,7 @@ public class RobotoWeekView extends LinearLayout {
         }
     }
 
+    // If log indicates given day is content, mark emoji on calendar
     public void markContentImage(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -350,6 +312,7 @@ public class RobotoWeekView extends LinearLayout {
         }
     }
 
+    // If log indicates given day is neutral, mark emoji on calendar
     public void markNeutral(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -364,6 +327,7 @@ public class RobotoWeekView extends LinearLayout {
         }
     }
 
+    // If log indicates given day is not great, mark emoji on calendar
     public void markNotGreat(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -377,6 +341,7 @@ public class RobotoWeekView extends LinearLayout {
         }
     }
 
+    // If log indicates given day is sad, mark emoji on calendar
     public void markSad(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -390,15 +355,6 @@ public class RobotoWeekView extends LinearLayout {
         }
     }
 
-
-
-    public void showDateTitle(boolean show) {
-        if (show) {
-            robotoCalendarMonthLayout.setVisibility(VISIBLE);
-        } else {
-            robotoCalendarMonthLayout.setVisibility(GONE);
-        }
-    }
 
     public void setRobotoCalendarListener(RobotoCalendarListener robotoCalendarListener) {
         this.robotoCalendarListener = robotoCalendarListener;
@@ -445,31 +401,6 @@ public class RobotoWeekView extends LinearLayout {
 
     private void setUpEventListeners() {
 
-//        leftButton.setOnClickListener(view -> {
-//            if (robotoCalendarListener == null) {
-//                throw new IllegalStateException("You must assign a valid RobotoCalendarListener first!");
-//            }
-//
-//            // Decrease month
-//            clearMoods();
-//            currentCalendar.add(Calendar.MONTH, -1);
-//            lastSelectedDayCalendar = null;
-//            updateView();
-//            robotoCalendarListener.onLeftButtonClick();
-//        });
-//
-//        rightButton.setOnClickListener(view -> {
-//            if (robotoCalendarListener == null) {
-//                throw new IllegalStateException("You must assign a valid RobotoCalendarListener first!");
-//            }
-//
-//            // Increase month
-//            clearMoods();
-//            currentCalendar.add(Calendar.MONTH, 1);
-//            lastSelectedDayCalendar = null;
-//            updateView();
-//            robotoCalendarListener.onRightButtonClick();
-//        });
     }
 
     private void setUpMonthLayout() {
@@ -509,18 +440,14 @@ public class RobotoWeekView extends LinearLayout {
         }
     }
 
+    // Set up days in current week
     private void setUpDaysOfMonthLayout() {
 
         TextView dayOfTheMonthText;
-        View circleImage1;
-        View circleImage2;
         ViewGroup dayOfTheMonthContainer;
         ViewGroup dayOfTheMonthBackground;
 
-        //i < 43
-
         Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
-//        Calendar markMood = Calendar.getInstance();
         auxCalendar.setTime(currentCalendar.getTime());
         auxCalendar.set(Calendar.DAY_OF_MONTH, currentCalendar.getFirstDayOfWeek());
         int firstDayOfWeek = auxCalendar.get(Calendar.DAY_OF_MONTH);
@@ -530,12 +457,8 @@ public class RobotoWeekView extends LinearLayout {
             dayOfTheMonthContainer = rootView.findViewWithTag(DAY_OF_THE_MONTH_LAYOUT + i);
             dayOfTheMonthBackground = rootView.findViewWithTag(DAY_OF_THE_MONTH_BACKGROUND + i);
             dayOfTheMonthText = rootView.findViewWithTag(DAY_OF_THE_MONTH_TEXT + i);
-//            circleImage1 = rootView.findViewWithTag(DAY_OF_THE_MONTH_CONTENT_IMAGE + i);
-//            circleImage2 = rootView.findViewWithTag(DAY_OF_THE_MONTH_VERYHAPPY_IMAGE + i);
 
             dayOfTheMonthText.setVisibility(View.INVISIBLE);
-//            circleImage1.setVisibility(View.GONE);
-//            circleImage2.setVisibility(View.GONE);
 
             // Apply styles
             dayOfTheMonthText.setBackgroundResource(android.R.color.transparent);
@@ -547,39 +470,20 @@ public class RobotoWeekView extends LinearLayout {
         }
     }
 
-    //where we'll want to look up the moods for the day
-    //gets called each month, so will need to send in a different set of dates each month
+
+    // For given day, set up days before and after current day in week by entering date
+    // For calendar day that is current day, change text color
     private void setUpDaysInCalendar() {
-
-        // fetch a set of entries corresponding to each mood type per month
-
-//        HashSet<Integer> entries = currMonth.getEntriesAndFilter();
-
-
-//        Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
-////        Calendar markMood = Calendar.getInstance();
-//        auxCalendar.setTime(currentCalendar.getTime());
-//        auxCalendar.set(Calendar.DAY_OF_MONTH, 1);
-//        int firstDayOfMonth = auxCalendar.get(Calendar.DAY_OF_WEEK);
         TextView dayOfTheMonthText;
         ViewGroup dayOfTheMonthContainer;
-        ViewGroup dayOfTheMonthLayout;
 
         Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
-//        Calendar markMood = Calendar.getInstance();
         auxCalendar.setTime(currentCalendar.getTime());
 
         Calendar today = Calendar.getInstance(Locale.getDefault());
         today.setTime(currentCalendar.getTime());
         int dayOfWeek = today.get(Calendar.DAY_OF_WEEK);
-//        auxCalendar.set(Calendar.DAY_OF_MONTH, currentCalendar.getFirstDayOfWeek());
-//        int firstDayOfWeek = auxCalendar.get(Calendar.DAY_OF_MONTH);
 
-        // Calculate dayOfTheMonthIndex
-//        int dayOfTheMonthIndex = getWeekIndex(firstDayOfMonth, auxCalendar);
-//        int dayOfTheMonthIndex = getWeekIndex(firstDayOfMonth, auxCalendar);
-
-//        for (int i = 1; i <= auxCalendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++, dayOfTheMonthIndex++) {
         for (int i = 1; i <= 7 ; i++) {
             auxCalendar = Calendar.getInstance(Locale.getDefault());
             auxCalendar.setTime(currentCalendar.getTime());
@@ -597,41 +501,14 @@ public class RobotoWeekView extends LinearLayout {
             dayOfTheMonthText.setVisibility(View.VISIBLE);
             dayOfTheMonthText.setText(String.valueOf(day));
             if (i - dayOfWeek == 0) {
-//        dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
                 dayOfTheMonthText.setTextColor(Color.rgb(115, 0, 238));
             }
-//            if (entries.contains(i)) {
-//                markMood.set(Calendar.DAY_OF_MONTH, i);
-//                markCircleImage1(markMood.getTime());
-//            }
         }
-
-//        for (int i = 36; i < 43; i++) {
-//            dayOfTheMonthText = rootView.findViewWithTag(DAY_OF_THE_MONTH_TEXT + i);
-//            dayOfTheMonthLayout = rootView.findViewWithTag(DAY_OF_THE_MONTH_LAYOUT + i);
-//            if (dayOfTheMonthText.getVisibility() == INVISIBLE) {
-//                dayOfTheMonthLayout.setVisibility(GONE);
-//            } else {
-//                dayOfTheMonthLayout.setVisibility(VISIBLE);
-//            }
-//        }
         drawMoodsFromFilter();
     }
 
+    // Replaced by previous method
     private void markDayAsCurrentDay() {
-        // If it's the current month, mark current day
-//        Calendar nowCalendar = Calendar.getInstance();
-//        if (nowCalendar.get(Calendar.YEAR) == currentCalendar.get(Calendar.YEAR) && nowCalendar.get(Calendar.MONTH) == currentCalendar.get(Calendar.MONTH)) {
-//            Calendar currentCalendar = Calendar.getInstance();
-//            currentCalendar.setTime(nowCalendar.getTime());
-//
-//
-//            TextView dayOfTheMonth = getDayOfMonthText(currentCalendar);
-////        dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
-//        dayOfTheMonth.setTextColor(Color.rgb(115, 0, 238));
-//            ViewGroup dayOfTheMonthBackground = getDayOfMonthBackground(currentCalendar);
-//            dayOfTheMonthBackground.setBackgroundResource(R.drawable.ring);
-//        }
     }
 
     private void updateView() {
@@ -639,8 +516,6 @@ public class RobotoWeekView extends LinearLayout {
         left_arrow.setVisibility(INVISIBLE);
         ImageView right_arrow = findViewById(R.id.rightButton);
         right_arrow.setVisibility(INVISIBLE);
-        TextView month = findViewById(R.id.monthText);
-        month.setVisibility(INVISIBLE);
         setUpMonthLayout();
         setUpWeekDaysLayout();
         setUpDaysOfMonthLayout();
@@ -681,20 +556,10 @@ public class RobotoWeekView extends LinearLayout {
         return rootView.findViewWithTag(key + index);
     }
 
+    // Fetches mood for each day in current week and sets mood for days with entries
     public void drawMoodsFromFilter() {
 
-        // fetch a set of entries corresponding to each mood type per month
-
-//        Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
-//        Calendar markMood = Calendar.getInstance(Locale.getDefault());
-//        auxCalendar.setTime(currentCalendar.getTime());
-//        auxCalendar.set(Calendar.DAY_OF_MONTH, 1);
-//        markMood.setTime(currentCalendar.getTime());
-//        markMood.set(Calendar.DAY_OF_MONTH, 1);
-
-
         Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
-//        Calendar markMood = Calendar.getInstance();
         auxCalendar.setTime(currentCalendar.getTime());
 
         Calendar today = Calendar.getInstance(Locale.getDefault());
@@ -741,135 +606,9 @@ public class RobotoWeekView extends LinearLayout {
                         markSad(markMood.getTime());
                     }
 
-        }
-
-
-
-
-
-
-//        Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
-//        Calendar markMood = Calendar.getInstance(Locale.getDefault());
-//        auxCalendar.setTime(currentCalendar.getTime());
-//        auxCalendar.set(Calendar.DAY_OF_MONTH, currentCalendar.getFirstDayOfWeek());
-//        markMood.setTime(currentCalendar.getTime());
-//        markMood.set(Calendar.DAY_OF_MONTH, currentCalendar.getFirstDayOfWeek());
-//
-//        int month = auxCalendar.get(Calendar.MONTH);
-//        int firstDayOfMonth = auxCalendar.get(Calendar.DAY_OF_WEEK);
-//        TextView dayOfTheMonthText;
-//        ViewGroup dayOfTheMonthContainer;
-//        ViewGroup dayOfTheMonthLayout;
-//
-//        int firstDayOfWeek = auxCalendar.get(Calendar.DAY_OF_MONTH);
-//
-//
-//
-//        HashMap<Integer,String> entries = new HashMap();
-//        Calendar today = Calendar.getInstance(Locale.getDefault());
-//        boolean afterToday = false;
-//        int currMonth;
-//        for (int i = firstDayOfWeek; i < 7 + firstDayOfWeek; i++) {
-//            if (i == today.get(Calendar.DAY_OF_MONTH)) {
-//                afterToday = true;
-//            }
-//            if (!afterToday) {
-//                if (i > today.get(Calendar.DAY_OF_MONTH)) {
-//                    currMonth = auxCalendar.get(Calendar.MONTH) - 1;
-//                } else {
-//                    currMonth = auxCalendar.get(Calendar.MONTH);
-//                }
-//            } else {
-//                if (i < today.get(Calendar.DAY_OF_MONTH)) {
-//                    currMonth = auxCalendar.get(Calendar.MONTH) + 1;
-//                } else {
-//                    currMonth = auxCalendar.get(Calendar.MONTH);
-//                }
-//            }
-//        }
-//
-//        // Calculate dayOfTheMonthIndex
-//        int dayOfTheMonthIndex = getWeekIndex(firstDayOfMonth, auxCalendar);
-//
-//        //auxCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
-//        for (int i = firstDayOfWeek; i < 7 + firstDayOfWeek; i++, dayOfTheMonthIndex++) {
-////            dayOfTheMonthContainer = rootView.findViewWithTag(DAY_OF_THE_MONTH_LAYOUT + dayOfTheMonthIndex);
-//            dayOfTheMonthText = rootView.findViewWithTag(DAY_OF_THE_MONTH_TEXT + dayOfTheMonthIndex);
-//            if (dayOfTheMonthText == null) {
-//                break;
-//            }
-//            if(entries.get(i) != null) {
-//                markMood.set(Calendar.MONTH, month);
-//                markMood.set(Calendar.DAY_OF_MONTH, i);
-//                if (entries.get(i).equals("content")) {
-//                    markContentImage(markMood.getTime());
-//                } else if (entries.get(i).equals("veryhappy")){
-//                    markVeryHappy(markMood.getTime());
-//                } else if (entries.get(i).equals("neutral")) {
-//                    markNeutral(markMood.getTime());
-//                } else if (entries.get(i).equals("notgreat")) {
-//                    markNotGreat(markMood.getTime());
-//                } else if (entries.get(i).equals("sad")) {
-//                    markSad(markMood.getTime());
-//                }
-//            }
-        }
-    }
-
-    public void clearMoods() {
-        HashMap<Integer, String> entries = currMonth.getEntriesAndFilter();
-
-        Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
-        Calendar markMood = Calendar.getInstance(Locale.getDefault());
-        auxCalendar.setTime(currentCalendar.getTime());
-        auxCalendar.set(Calendar.DAY_OF_MONTH, 1);
-        markMood.setTime(currentCalendar.getTime());
-        markMood.set(Calendar.DAY_OF_MONTH, 1);
-        int firstDayOfMonth = auxCalendar.get(Calendar.DAY_OF_WEEK);
-        TextView dayOfTheMonthText;
-
-        // Calculate dayOfTheMonthIndex
-        int dayOfTheMonthIndex = getWeekIndex(firstDayOfMonth, auxCalendar);
-
-        for (int i = 1; i <= auxCalendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++, dayOfTheMonthIndex++) {
-            dayOfTheMonthText = rootView.findViewWithTag(DAY_OF_THE_MONTH_TEXT + dayOfTheMonthIndex);
-            if (dayOfTheMonthText == null) {
-                break;
-            }
-            if (entries.get(i) != null) {
-                markMood.set(Calendar.MONTH, auxCalendar.get(Calendar.MONTH));
-                markMood.set(Calendar.DAY_OF_MONTH, i);
-                if (entries.get(i).equals("content")) {
-                    ImageView contentImage = getContentImage(markMood);
-                    if (contentImage.getVisibility() == VISIBLE) {
-                        contentImage.setVisibility(INVISIBLE);
-                    }
-                } else if (entries.get(i).equals("veryhappy")) {
-                    ImageView veryHappyImage = getVeryHappyImage(markMood);
-                    if (veryHappyImage.getVisibility() == VISIBLE) {
-                        veryHappyImage.setVisibility(INVISIBLE);
-                    }
-                } else if (entries.get(i).equals("neutral")) {
-                    ImageView neutral = getNeutralImage(markMood);
-                    if (neutral.getVisibility() == VISIBLE) {
-                        neutral.setVisibility(INVISIBLE);
-                    }
-                } else if (entries.get(i).equals("notgreat")) {
-                    ImageView notgreat = getNotGreatImage(markMood);
-                    if (notgreat.getVisibility() == VISIBLE) {
-                        notgreat.setVisibility(INVISIBLE);
-                    }
-                } else if (entries.get(i).equals("sad")) {
-                    ImageView sad = getSadImage(markMood);
-                    if (sad.getVisibility() == VISIBLE) {
-                        sad.setVisibility(INVISIBLE);
-                    }
-                }
             }
         }
     }
-
-
 
 
     public interface RobotoCalendarListener {
@@ -877,10 +616,6 @@ public class RobotoWeekView extends LinearLayout {
         void onDayClick(Date date);
 
         void onDayLongClick(Date date);
-
-        void onRightButtonClick();
-
-        void onLeftButtonClick();
     }
 
 }

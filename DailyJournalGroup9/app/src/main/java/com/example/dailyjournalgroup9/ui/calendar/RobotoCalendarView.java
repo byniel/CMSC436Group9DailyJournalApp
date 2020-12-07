@@ -52,6 +52,8 @@ import com.example.dailyjournalgroup9.R;
  *
  * @author Marco Hernaiz Cao
  */
+
+// external library with changes that allow for calendar view customization
 public class RobotoCalendarView extends LinearLayout {
 
     private static final String DAY_OF_THE_WEEK_TEXT = "dayOfTheWeekText";
@@ -120,12 +122,17 @@ public class RobotoCalendarView extends LinearLayout {
 
             markDayAsSelectedDay(calendar.getTime());
 
+
             // Fire event
             if (robotoCalendarListener == null) {
                 throw new IllegalStateException("You must assign a valid RobotoCalendarListener first!");
             } else {
                 robotoCalendarListener.onDayLongClick(calendar.getTime());
             }
+
+            currMonth.readDataForMonth(calendar.getTime(), getContext());
+//            updateView();
+
             return true;
         }
     };
@@ -245,16 +252,6 @@ public class RobotoCalendarView extends LinearLayout {
         updateView();
     }
 
-    @NonNull
-    public Date getDate() {
-        return currentCalendar.getTime();
-    }
-
-    @Nullable
-    public Date getSelectedDay() {
-        return lastSelectedDayCalendar.getTime();
-    }
-
     public void markDayAsSelectedDay(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -268,21 +265,6 @@ public class RobotoCalendarView extends LinearLayout {
         // Mark current day as selected
         ViewGroup dayOfTheMonthBackground = getDayOfMonthBackground(calendar);
         dayOfTheMonthBackground.setBackgroundResource(R.drawable.ring_background);
-//        dayOfTheMonthBackground.setBackgroundColor(Color.LTGRAY);
-
-        TextView dayOfTheMonth = getDayOfMonthText(calendar);
-//        dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
-//        dayOfTheMonth.setTextColor(Color.MAGENTA);
-
-        ImageView contentImage = getContentImage(calendar);
-        ImageView veryHappyImage = getVeryHappyImage(calendar);
-//        if (contentImage.getVisibility() == VISIBLE) {
-//            DrawableCompat.setTint(contentImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
-//        }
-//
-//        if (veryHappyImage.getVisibility() == VISIBLE) {
-//            DrawableCompat.setTint(veryHappyImage.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
-//        }
     }
 
     public void clearSelectedDay() {
@@ -299,16 +281,6 @@ public class RobotoCalendarView extends LinearLayout {
 
             TextView dayOfTheMonth = getDayOfMonthText(lastSelectedDayCalendar);
             dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_day_of_the_month_font));
-
-            ImageView circleImage1 = getContentImage(lastSelectedDayCalendar);
-            ImageView circleImage2 = getVeryHappyImage(lastSelectedDayCalendar);
-            if (circleImage1.getVisibility() == VISIBLE) {
-                DrawableCompat.setTint(circleImage1.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_circle_1));
-            }
-
-            if (circleImage2.getVisibility() == VISIBLE) {
-                DrawableCompat.setTint(circleImage2.getDrawable(), ContextCompat.getColor(getContext(), R.color.roboto_calendar_circle_2));
-            }
         }
     }
 
@@ -316,6 +288,7 @@ public class RobotoCalendarView extends LinearLayout {
         this.shortWeekDays = shortWeekDays;
     }
 
+    // adds emoji denoting very happy under specific date
     public void markVeryHappy(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -329,6 +302,7 @@ public class RobotoCalendarView extends LinearLayout {
         }
     }
 
+    // Added by group: adds emoji denoting mark content under specific date
     public void markContentImage(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -341,6 +315,7 @@ public class RobotoCalendarView extends LinearLayout {
         }
     }
 
+    // Added by group: adds emoji denoting neutral under specific date
     public void markNeutral(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -354,6 +329,7 @@ public class RobotoCalendarView extends LinearLayout {
         }
     }
 
+    // Added by group: adds emoji denoting not great under specific date
     public void markNotGreat(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -366,6 +342,7 @@ public class RobotoCalendarView extends LinearLayout {
         }
     }
 
+    // Added by group: adds emoji denoting sad under specific date
     public void markSad(@NonNull Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -377,8 +354,6 @@ public class RobotoCalendarView extends LinearLayout {
             DrawableCompat.setTint(sadImage.getDrawable(), Color.RED);
         }
     }
-
-
 
     public void showDateTitle(boolean show) {
         if (show) {
@@ -510,13 +485,8 @@ public class RobotoCalendarView extends LinearLayout {
             dayOfTheMonthContainer = rootView.findViewWithTag(DAY_OF_THE_MONTH_LAYOUT + i);
             dayOfTheMonthBackground = rootView.findViewWithTag(DAY_OF_THE_MONTH_BACKGROUND + i);
             dayOfTheMonthText = rootView.findViewWithTag(DAY_OF_THE_MONTH_TEXT + i);
-            circleImage1 = rootView.findViewWithTag(DAY_OF_THE_MONTH_CONTENT_IMAGE + i);
-            circleImage2 = rootView.findViewWithTag(DAY_OF_THE_MONTH_VERYHAPPY_IMAGE + i);
 
             dayOfTheMonthText.setVisibility(View.INVISIBLE);
-            circleImage1.setVisibility(View.GONE);
-            circleImage2.setVisibility(View.GONE);
-
             // Apply styles
             dayOfTheMonthText.setBackgroundResource(android.R.color.transparent);
             dayOfTheMonthText.setTypeface(null, Typeface.NORMAL);
@@ -527,16 +497,10 @@ public class RobotoCalendarView extends LinearLayout {
         }
     }
 
-    //where we'll want to look up the moods for the day
-    //gets called each month, so will need to send in a different set of dates each month
+
     private void setUpDaysInCalendar() {
 
-        // fetch a set of entries corresponding to each mood type per month
-
-//        HashSet<Integer> entries = currMonth.getEntriesAndFilter();
-
         Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
-//        Calendar markMood = Calendar.getInstance();
         auxCalendar.setTime(currentCalendar.getTime());
         auxCalendar.set(Calendar.DAY_OF_MONTH, 1);
         int firstDayOfMonth = auxCalendar.get(Calendar.DAY_OF_WEEK);
@@ -557,10 +521,6 @@ public class RobotoCalendarView extends LinearLayout {
             dayOfTheMonthContainer.setOnLongClickListener(onDayOfMonthLongClickListener);
             dayOfTheMonthText.setVisibility(View.VISIBLE);
             dayOfTheMonthText.setText(String.valueOf(i));
-//            if (entries.contains(i)) {
-//                markMood.set(Calendar.DAY_OF_MONTH, i);
-//                markCircleImage1(markMood.getTime());
-//            }
         }
 
         for (int i = 36; i < 43; i++) {
@@ -575,6 +535,7 @@ public class RobotoCalendarView extends LinearLayout {
         drawMoodsFromFilter();
     }
 
+    //Adapted external code to make current day specific color
     private void markDayAsCurrentDay() {
         // If it's the current month, mark current day
         Calendar nowCalendar = Calendar.getInstance();
@@ -584,10 +545,9 @@ public class RobotoCalendarView extends LinearLayout {
 
 
             TextView dayOfTheMonth = getDayOfMonthText(currentCalendar);
-//        dayOfTheMonth.setTextColor(ContextCompat.getColor(getContext(), R.color.roboto_calendar_selected_day_font));
-        dayOfTheMonth.setTextColor(Color.rgb(115, 0, 238));
-//            ViewGroup dayOfTheMonthBackground = getDayOfMonthBackground(currentCalendar);
-//            dayOfTheMonthBackground.setBackgroundResource(R.drawable.ring);
+
+            //sets current day to purple
+            dayOfTheMonth.setTextColor(Color.rgb(115, 0, 238));
         }
     }
 
@@ -632,14 +592,15 @@ public class RobotoCalendarView extends LinearLayout {
         return rootView.findViewWithTag(key + index);
     }
 
+    // Gets a map of entries depending on the mood and media filters.
+    // Based on the map of days and emotions, displays the emotions per day
     public void drawMoodsFromFilter() {
-
-        // fetch a set of entries corresponding to each mood type per month
 
         Calendar auxCalendar = Calendar.getInstance(Locale.getDefault());
         Calendar markMood = Calendar.getInstance(Locale.getDefault());
         auxCalendar.setTime(currentCalendar.getTime());
         auxCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        currMonth.readDataForMonth(auxCalendar.getTime(), getContext());
         markMood.setTime(currentCalendar.getTime());
         markMood.set(Calendar.DAY_OF_MONTH, 1);
         int month = auxCalendar.get(Calendar.MONTH);
@@ -655,7 +616,6 @@ public class RobotoCalendarView extends LinearLayout {
         int dayOfTheMonthIndex = getWeekIndex(firstDayOfMonth, auxCalendar);
 
         for (int i = 1; i <= auxCalendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++, dayOfTheMonthIndex++) {
-//            dayOfTheMonthContainer = rootView.findViewWithTag(DAY_OF_THE_MONTH_LAYOUT + dayOfTheMonthIndex);
             dayOfTheMonthText = rootView.findViewWithTag(DAY_OF_THE_MONTH_TEXT + dayOfTheMonthIndex);
             if (dayOfTheMonthText == null) {
                 break;
@@ -678,6 +638,7 @@ public class RobotoCalendarView extends LinearLayout {
         }
     }
 
+    // Goes through the moods that are displayed and clears them when changing pages
     public void clearMoods() {
         HashMap<Integer, String> entries = currMonth.getEntriesAndFilter();
 
