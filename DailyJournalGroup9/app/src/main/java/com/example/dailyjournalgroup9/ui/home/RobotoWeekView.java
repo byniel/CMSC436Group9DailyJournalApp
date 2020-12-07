@@ -639,8 +639,8 @@ public class RobotoWeekView extends LinearLayout {
         left_arrow.setVisibility(INVISIBLE);
         ImageView right_arrow = findViewById(R.id.rightButton);
         right_arrow.setVisibility(INVISIBLE);
-        TextView month = findViewById(R.id.monthText);
-        month.setVisibility(INVISIBLE);
+//        TextView month = findViewById(R.id.monthText);
+//        month.setVisibility(INVISIBLE);
         setUpMonthLayout();
         setUpWeekDaysLayout();
         setUpDaysOfMonthLayout();
